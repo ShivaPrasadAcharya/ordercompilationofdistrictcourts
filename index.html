@@ -1,0 +1,1703 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>काठमाडौं जिल्ला अदालत — आदेश दर्पण</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@400;600;700&family=Noto+Sans+Devanagari:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1209;
+    --parchment: #f5efd8;
+    --parchment-dark: #ede3c4;
+    --gold: #b8862a;
+    --gold-light: #d4a843;
+    --gold-pale: #f0d896;
+    --red-seal: #8b1a1a;
+    --border: #c9a84c;
+    --muted: #6b5a3e;
+    --cream: #fdf7e9;
+    --green: #1a5c2a;
+    --green-light: #2d8a42;
+    --blue: #1a3a6b;
+    --sidebar-w: 390px;
+    --collapse-tab-w: 36px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; overflow: hidden; }
+
+  body {
+    background: #2c1f0e;
+    background-image: radial-gradient(ellipse at 20% 0%, #3d2a10 0%, transparent 60%),
+                      radial-gradient(ellipse at 80% 100%, #1a0f05 0%, transparent 60%);
+    font-family: 'Noto Sans Devanagari', sans-serif;
+    color: var(--ink);
+    display: flex; flex-direction: column;
+  }
+  body::before {
+    content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: 0.35;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  }
+
+  /* ══════════ TOP HEADER ══════════ */
+  #top-header {
+    position: relative; z-index: 10; flex-shrink: 0;
+    background: linear-gradient(180deg, #1e1208 0%, #2c1f0e 100%);
+    border-bottom: 2px solid var(--gold);
+    padding: 0.6rem 1.5rem;
+    display: flex; align-items: center; gap: 1rem;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.5);
+  }
+  .header-emblem {
+    width: 44px; height: 44px; flex-shrink: 0; background: var(--gold); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; font-size: 1.4rem;
+    box-shadow: 0 0 0 3px #2c1f0e, 0 0 0 5px var(--gold);
+  }
+  .header-text h1 {
+    font-family: 'Noto Serif Devanagari', serif;
+    font-size: clamp(0.95rem, 2.2vw, 1.35rem); font-weight: 700;
+    color: var(--gold-light); letter-spacing: 0.02em; line-height: 1.2;
+  }
+  .header-text p { font-size: 0.7rem; color: var(--gold-pale); opacity: 0.8; margin-top: 1px; }
+  .header-divider { width: 1px; height: 34px; background: rgba(184,134,42,0.3); flex-shrink: 0; margin: 0 0.3rem; }
+  .header-sub { font-size: 0.68rem; color: var(--gold-pale); opacity: 0.65; line-height: 1.4; }
+
+  /* ══════════ LAYOUT ══════════ */
+  #main-layout {
+    position: relative; z-index: 1; flex: 1;
+    display: flex; overflow: hidden; min-height: 0;
+  }
+
+  /* ══════════════════════════════════════════════
+     LEFT PANEL — expandable / collapsible
+  ══════════════════════════════════════════════ */
+  #left-panel {
+    width: var(--sidebar-w);
+    flex-shrink: 0;
+    background: var(--parchment);
+    background-image: linear-gradient(160deg, #fefbf0 0%, var(--parchment) 60%, #ede3c2 100%);
+    border-right: 2px solid var(--border);
+    box-shadow: 4px 0 24px rgba(0,0,0,0.3);
+    display: flex; flex-direction: column; overflow: hidden;
+    position: relative;
+    transition: width 0.28s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  /* Collapsed state — shrink to just the toggle tab width */
+  #left-panel.panel-collapsed {
+    width: var(--collapse-tab-w);
+  }
+
+  /* Left-edge decorative stripe */
+  #left-panel::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 5px;
+    background: linear-gradient(180deg, var(--red-seal), var(--gold), var(--red-seal));
+    pointer-events: none; z-index: 1;
+  }
+
+  /* ── COLLAPSE TOGGLE TAB ── */
+  /* The tab sits at the right edge of the panel, always visible */
+  #panel-collapse-tab {
+    position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+    width: var(--collapse-tab-w); height: 72px;
+    background: linear-gradient(180deg, var(--gold) 0%, #a07020 100%);
+    border-left: 1px solid rgba(255,255,255,0.15);
+    border-radius: 0 6px 6px 0;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; z-index: 20;
+    box-shadow: 3px 0 12px rgba(0,0,0,0.25);
+    transition: background 0.18s, width 0.18s;
+    user-select: none;
+  }
+  #panel-collapse-tab:hover {
+    background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold) 100%);
+    width: 40px;
+  }
+  #panel-collapse-tab .tab-icon {
+    color: #fff; font-size: 0.85rem; font-weight: 700;
+    transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
+    text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    line-height: 1;
+  }
+  /* When panel is expanded → arrow points left (◀); collapsed → right (▶) */
+  #left-panel:not(.panel-collapsed) #panel-collapse-tab .tab-icon { content: ''; }
+  /* We'll set innerHTML via JS */
+
+  /* Hide panel content when collapsed (but keep tab visible) */
+  #left-panel.panel-collapsed .panel-inner-content {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s;
+  }
+  #left-panel:not(.panel-collapsed) .panel-inner-content {
+    opacity: 1;
+    transition: opacity 0.15s 0.1s;
+  }
+
+  /* Collapsed state: show vertical label */
+  #panel-collapsed-label {
+    display: none;
+    position: absolute; left: 5px; top: 0; bottom: 0; width: calc(var(--collapse-tab-w) - 5px);
+    align-items: center; justify-content: center;
+    writing-mode: vertical-rl; text-orientation: mixed;
+    font-family: 'Noto Serif Devanagari', serif;
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em;
+    color: var(--red-seal); text-transform: uppercase;
+    user-select: none; pointer-events: none;
+  }
+  #left-panel.panel-collapsed #panel-collapsed-label { display: flex; }
+
+  /* ══════════ PANEL INNER CONTENT wrapper ══════════ */
+  .panel-inner-content {
+    display: flex; flex-direction: column;
+    flex: 1; overflow: hidden; min-height: 0;
+    /* leave room for the toggle tab on the right */
+    padding-right: calc(var(--collapse-tab-w) + 2px);
+  }
+
+  /* Panel top bar */
+  .panel-topbar {
+    flex-shrink: 0;
+    padding: 0.65rem 1rem 0.65rem 1.4rem;
+    background: linear-gradient(180deg, #fdf8ec 0%, rgba(245,239,216,0.85) 100%);
+    border-bottom: 1px solid rgba(184,134,42,0.3);
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .panel-title-text {
+    font-family: 'Noto Serif Devanagari', serif; font-size: 0.85rem; font-weight: 700;
+    color: var(--red-seal); text-transform: uppercase; letter-spacing: 0.07em; flex: 1;
+  }
+
+  /* FILES TOGGLE BUTTON */
+  .files-toggle-btn {
+    display: flex; align-items: center; gap: 0.35rem;
+    background: rgba(139,26,26,0.07); border: 1px solid rgba(184,134,42,0.35);
+    border-radius: 3px; padding: 0.28rem 0.7rem;
+    font-family: 'Noto Sans Devanagari', sans-serif; font-size: 0.7rem;
+    color: var(--red-seal); font-weight: 600; cursor: pointer;
+    transition: all 0.18s; white-space: nowrap; user-select: none;
+  }
+  .files-toggle-btn:hover { background: rgba(139,26,26,0.14); border-color: var(--gold); }
+  .files-toggle-btn .ftb-arrow { font-size: 0.55rem; transition: transform 0.22s; color: var(--gold); }
+  .files-toggle-btn.open .ftb-arrow { transform: rotate(180deg); }
+  .files-toggle-btn .ftb-count {
+    background: var(--green); color: #d4f0da; border-radius: 20px;
+    font-size: 0.6rem; padding: 0 5px; font-weight: 700;
+  }
+
+  /* FILES ACCORDION */
+  #files-accordion {
+    flex-shrink: 0; overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+    background: rgba(253,248,236,0.7);
+    border-bottom: 0px solid rgba(184,134,42,0.25);
+    padding: 0 1rem 0 1.4rem;
+  }
+  #files-accordion.open {
+    max-height: 240px; padding: 0.65rem 1rem 0.65rem 1.4rem;
+    border-bottom-width: 1px; overflow-y: auto;
+  }
+  #files-accordion::-webkit-scrollbar { width: 8px; }
+  #files-accordion::-webkit-scrollbar-track { background: var(--parchment-dark); }
+  #files-accordion::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+
+  /* AI status */
+  #ai-status-bar {
+    display: none; border: 1px solid rgba(26,58,107,0.25); border-radius: 3px;
+    padding: 0.45rem 0.7rem; margin-bottom: 0.6rem; font-size: 0.74rem;
+    color: var(--blue); align-items: center; gap: 0.5rem; background: rgba(26,58,107,0.06);
+  }
+  #ai-status-bar.visible { display: flex; }
+  .ai-spinner {
+    width: 13px; height: 13px; border: 2px solid rgba(26,58,107,0.2);
+    border-top-color: var(--blue); border-radius: 50%;
+    animation: spin 0.8s linear infinite; flex-shrink: 0;
+  }
+  .ai-spinner.done { animation: none; border: none; font-size: 0.85rem; width: auto; height: auto; }
+  #ai-status-text { flex: 1; line-height: 1.3; }
+  .file-progress { font-size: 0.65rem; color: var(--muted); }
+
+  /* File rows */
+  .loaded-files { display: flex; flex-direction: column; gap: 0.3rem; }
+  .file-row {
+    display: flex; align-items: center; gap: 0.45rem;
+    border: 1px solid rgba(184,134,42,0.2); border-radius: 3px;
+    padding: 0.32rem 0.65rem; font-size: 0.75rem; transition: background 0.2s;
+  }
+  .file-row.processing { background: rgba(26,58,107,0.05); }
+  .file-row.done       { background: rgba(26,92,42,0.07); }
+  .file-row.error      { background: rgba(139,26,26,0.07); }
+  .file-row .dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .file-row.processing .dot { background: #3a6bcf; animation: pulse 1s infinite; }
+  .file-row.done .dot       { background: var(--green-light); }
+  .file-row.error .dot      { background: var(--red-seal); }
+  .file-row .fname { flex: 1; font-weight: 500; color: var(--ink); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.72rem; }
+  .file-row .finfo { font-size: 0.65rem; color: var(--muted); white-space: nowrap; }
+  .btn-json { background: var(--green); color: #d4f0da; border: none; border-radius: 2px; padding: 2px 7px; font-size: 0.62rem; cursor: pointer; transition: background 0.18s; white-space: nowrap; display: none; }
+  .file-row.done .btn-json { display: inline-block; }
+  .btn-json:hover { background: var(--green-light); }
+
+  /* ══════════ CASE LIST SECTION ══════════ */
+  .list-section {
+    flex: 1; display: flex; flex-direction: column; overflow: hidden; min-height: 0;
+    padding: 0.6rem 0.9rem 0 1.4rem;
+  }
+  .selection-header {
+    flex-shrink: 0; display: flex; align-items: center; gap: 0.4rem;
+    margin-bottom: 0.4rem; padding-right: 0.1rem;
+  }
+  .selection-label { font-size: 0.7rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.09em; flex: 1; }
+  .quick-btns { display: flex; gap: 0.5rem; }
+  .quick-btn { background: none; border: none; color: var(--red-seal); font-size: 0.65rem; font-family: 'Noto Sans Devanagari', sans-serif; cursor: pointer; font-weight: 600; text-decoration: underline; padding: 0; }
+  .quick-btn:hover { color: var(--gold); }
+
+  /* Scroll outer with click arrows */
+  .scroll-outer { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-height: 0; }
+  .scroll-arrow {
+    flex-shrink: 0; width: 100%; height: 28px;
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(180deg, rgba(245,239,216,0.95), rgba(237,227,196,0.7));
+    border: 1px solid rgba(184,134,42,0.25); border-radius: 3px;
+    cursor: pointer; user-select: none;
+    color: var(--gold); font-size: 0.75rem; font-weight: 700;
+    transition: background 0.15s, color 0.15s; letter-spacing: 0.05em; z-index: 2;
+  }
+  .scroll-arrow:hover { background: rgba(184,134,42,0.18); color: var(--red-seal); }
+  .scroll-arrow:active { background: rgba(184,134,42,0.3); }
+  .scroll-arrow.disabled { opacity: 0.3; cursor: default; pointer-events: none; }
+  .scroll-arrow-top { margin-bottom: 2px; }
+  .scroll-arrow-bot { margin-top: 2px; }
+
+  .case-list-scroll {
+    flex: 1; overflow-y: auto; overflow-x: hidden; min-height: 0;
+    scrollbar-width: thick; scrollbar-color: var(--gold) var(--parchment-dark);
+  }
+  .case-list-scroll::-webkit-scrollbar { width: 14px; }
+  .case-list-scroll::-webkit-scrollbar-track { background: var(--parchment-dark); }
+  .case-list-scroll::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 5px; border: 3px solid var(--parchment-dark); min-height: 40px; }
+  .case-list-scroll::-webkit-scrollbar-thumb:hover { background: var(--gold-light); }
+
+  .case-list { border: 1.5px solid var(--border); border-radius: 3px; background: var(--cream); overflow: hidden; }
+  .menu-loading { padding: 1rem; text-align: center; color: var(--muted); font-size: 0.78rem; font-style: italic; }
+
+  /* ══════════════════════════════════════════════
+     CATEGORY HEADER — now has ALL checkbox + arrow + label + count
+  ══════════════════════════════════════════════ */
+  .cat-header {
+    display: flex; align-items: center;
+    background: linear-gradient(90deg, rgba(184,134,42,0.13), rgba(184,134,42,0.04));
+    border-bottom: 1px solid rgba(184,134,42,0.2);
+    position: sticky; top: 0; z-index: 2;
+    user-select: none;
+    /* NO cursor:pointer on whole row — only on label area */
+  }
+
+  /* ALL checkbox zone — same width as item check zone */
+  .cat-check-zone {
+    display: flex; align-items: center; justify-content: center;
+    width: 46px; flex-shrink: 0;
+    padding: 0.45rem 0;
+    cursor: pointer;
+    border-right: 1px solid rgba(184,134,42,0.15);
+  }
+  .cat-check-zone input[type="checkbox"] {
+    appearance: none; -webkit-appearance: none;
+    width: 20px; height: 20px;
+    border: 2px solid var(--border); border-radius: 4px;
+    background: #fff; cursor: pointer;
+    transition: all 0.1s; position: relative; display: block;
+  }
+  .cat-check-zone input[type="checkbox"]:checked {
+    background: var(--red-seal); border-color: var(--red-seal);
+  }
+  .cat-check-zone input[type="checkbox"]:checked::after {
+    content: '✓'; position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -52%);
+    color: #fff; font-size: 13px; font-weight: 700; line-height: 1;
+  }
+  /* Indeterminate (some selected) */
+  .cat-check-zone input[type="checkbox"].indeterminate {
+    background: var(--gold); border-color: var(--gold);
+  }
+  .cat-check-zone input[type="checkbox"].indeterminate::after {
+    content: '−'; position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -52%);
+    color: #fff; font-size: 16px; font-weight: 700; line-height: 1;
+  }
+  .cat-check-zone input[type="checkbox"]:hover:not(:checked):not(.indeterminate) {
+    border-color: var(--red-seal); box-shadow: 0 0 0 3px rgba(139,26,26,0.1);
+  }
+
+  /* Label area — click to expand/collapse */
+  .cat-label-area {
+    flex: 1; min-width: 0;
+    display: flex; align-items: center; gap: 0.4rem;
+    padding: 0.48rem 0.7rem 0.48rem 0.5rem;
+    cursor: pointer;
+  }
+  .cat-label-area:hover { background: rgba(184,134,42,0.08); }
+  .cat-arrow { font-size: 0.55rem; transition: transform 0.2s; color: var(--gold); flex-shrink: 0; }
+  .cat-header.collapsed .cat-arrow { transform: rotate(-90deg); }
+  .cat-file-name { font-size: 0.67rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.09em; color: var(--red-seal); flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .cat-count-badge { font-size: 0.6rem; color: var(--muted); white-space: nowrap; flex-shrink: 0; }
+
+  .cat-items.hidden { display: none; }
+
+  /* ══════════ ITEM ROW ══════════ */
+  .item-row {
+    display: flex; align-items: stretch;
+    border-bottom: 1px solid rgba(184,134,42,0.1);
+    cursor: pointer; transition: background 0.1s; min-height: 54px;
+  }
+  .item-row:last-child { border-bottom: none; }
+  .item-row:hover  { background: rgba(184,134,42,0.1); }
+  .item-row.selected { background: rgba(184,134,42,0.19); }
+  .item-row:active { background: rgba(184,134,42,0.28); }
+
+  .item-check-zone {
+    display: flex; align-items: center; justify-content: center;
+    width: 46px; flex-shrink: 0;
+    background: rgba(0,0,0,0.02);
+    border-right: 1px solid rgba(184,134,42,0.1);
+  }
+  .item-check-zone input[type="checkbox"] {
+    appearance: none; -webkit-appearance: none;
+    width: 22px; height: 22px;
+    border: 2px solid var(--border); border-radius: 4px;
+    background: #fff; cursor: pointer;
+    transition: all 0.1s; position: relative; display: block;
+  }
+  .item-check-zone input[type="checkbox"]:checked {
+    background: var(--gold); border-color: var(--gold);
+  }
+  .item-check-zone input[type="checkbox"]:checked::after {
+    content: '✓'; position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -52%);
+    color: #fff; font-size: 14px; font-weight: 700; line-height: 1;
+  }
+  .item-check-zone input[type="checkbox"]:hover:not(:checked) {
+    border-color: var(--gold-light); box-shadow: 0 0 0 3px rgba(184,134,42,0.15);
+  }
+  .item-row.selected .item-check-zone { background: rgba(184,134,42,0.08); }
+
+  .item-content {
+    flex: 1; min-width: 0; padding: 0.45rem 0.8rem 0.45rem 0.6rem;
+    display: flex; flex-direction: column; justify-content: center; gap: 0.18rem;
+  }
+  .item-case-no { font-size: 0.8rem; font-weight: 700; color: var(--red-seal); font-family: 'Noto Serif Devanagari', serif; letter-spacing: 0.01em; line-height: 1.2; }
+  .item-case-type { font-size: 0.82rem; color: var(--ink); font-weight: 600; line-height: 1.25; font-family: 'Noto Sans Devanagari', sans-serif; }
+  .item-case-sub { font-size: 0.68rem; color: var(--muted); line-height: 1.2; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-style: italic; }
+
+  /* ══════════ PANEL FOOTER ══════════ */
+  .panel-footer {
+    flex-shrink: 0; padding: 0.5rem 1rem 0.5rem 1.4rem;
+    background: rgba(237,227,196,0.95); border-top: 1px solid var(--border);
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .sel-count { flex: 1; font-size: 0.78rem; color: var(--muted); text-align: center; }
+  .sel-count span { font-weight: 700; color: var(--red-seal); font-size: 1rem; }
+  /* live indicator dot */
+  .live-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--green-light); flex-shrink: 0;
+    box-shadow: 0 0 0 2px rgba(45,138,66,0.25);
+    animation: pulse 2s infinite;
+  }
+  .live-label { font-size: 0.62rem; color: var(--green); font-weight: 600; white-space: nowrap; }
+  /* Reset button */
+  .btn-reset {
+    display: flex; align-items: center; gap: 0.3rem;
+    background: transparent; border: 1px solid rgba(139,26,26,0.3);
+    border-radius: 3px; padding: 0.3rem 0.65rem;
+    font-family: 'Noto Sans Devanagari', sans-serif; font-size: 0.68rem;
+    color: var(--muted); cursor: pointer; transition: all 0.18s;
+    white-space: nowrap; user-select: none;
+  }
+  .btn-reset:hover { border-color: var(--red-seal); color: var(--red-seal); background: rgba(139,26,26,0.06); }
+  .btn-reset:active { background: rgba(139,26,26,0.12); }
+  .btn-reset svg { width: 11px; height: 11px; flex-shrink: 0; }
+  /* Copy-to-clipboard button on card */
+  .copy-order-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: transparent; border: 1px solid rgba(184,134,42,0.3);
+    border-radius: 4px; padding: 3px 7px; cursor: pointer;
+    color: var(--muted); transition: all 0.15s;
+    vertical-align: middle; margin-left: 0.5rem; line-height: 1;
+  }
+  .copy-order-btn svg { width: 13px; height: 13px; display: block; }
+  .copy-order-btn:hover { background: rgba(184,134,42,0.12); border-color: var(--gold); color: var(--gold); }
+  .copy-order-btn:active { background: rgba(184,134,42,0.22); }
+  .copy-order-btn.copied { background: rgba(26,92,42,0.12); border-color: var(--green-light); color: var(--green); }
+  .copy-order-btn.copied svg { display: none; }
+  .copy-order-btn.copied::after { content: '✓'; font-size: 0.75rem; font-weight: 700; line-height: 1; }
+
+  /* ══════════ RIGHT PANEL ══════════ */
+  #right-panel {
+    flex: 1; overflow-y: auto; overflow-x: hidden;
+    padding: 1.4rem 1.8rem 3rem; min-width: 0;
+    scrollbar-width: thick; scrollbar-color: var(--gold) rgba(44,31,14,0.4);
+  }
+  #right-panel::-webkit-scrollbar { width: 13px; }
+  #right-panel::-webkit-scrollbar-track { background: rgba(44,31,14,0.4); }
+  #right-panel::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 6px; border: 3px solid #2c1f0e; min-height: 40px; }
+  #right-panel::-webkit-scrollbar-thumb:hover { background: var(--gold-light); }
+
+  /* ══════════ ORDER CARDS ══════════ */
+  #results-area { display: flex; flex-direction: column; gap: 1.4rem; }
+  .results-header { font-family: 'Noto Serif Devanagari', serif; font-size: 0.78rem; font-weight: 700; color: var(--gold-pale); text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.7; }
+  .order-card {
+    background: var(--parchment);
+    background-image: linear-gradient(160deg, #fefbf0 0%, var(--parchment) 60%, #ede3c2 100%);
+    border: 1px solid var(--border); border-radius: 3px; overflow: hidden;
+    box-shadow: inset 0 0 0 6px rgba(184,134,42,0.05), 0 6px 28px rgba(0,0,0,0.35);
+    animation: cardIn 0.35s ease both; position: relative;
+  }
+  .order-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: linear-gradient(180deg, var(--red-seal), var(--gold)); pointer-events: none; }
+  .card-header { padding: 1rem 1.4rem 0.9rem 1.8rem; border-bottom: 1px solid rgba(184,134,42,0.22); display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .card-meta { flex: 1; min-width: 0; }
+  .card-court { font-size: 0.68rem; color: var(--muted); letter-spacing: 0.07em; text-transform: uppercase; font-weight: 500; display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; }
+  .src-tag { background: rgba(26,92,42,0.1); color: var(--green); border: 1px solid rgba(26,92,42,0.25); border-radius: 20px; padding: 1px 7px; font-size: 0.58rem; font-weight: 700; }
+  .card-case-no { font-family: 'Noto Serif Devanagari', serif; font-size: 1.05rem; font-weight: 700; color: var(--red-seal); margin: 0.15rem 0; }
+  .card-parties { font-size: 0.82rem; color: var(--muted); font-style: italic; line-height: 1.5; }
+  .card-parties strong { font-style: normal; color: var(--ink); }
+  .case-badge { background: linear-gradient(135deg, var(--red-seal), #6b1010); color: #f5e8c8; border-radius: 20px; padding: 4px 13px; font-size: 0.7rem; font-weight: 600; white-space: nowrap; flex-shrink: 0; align-self: flex-start; }
+  .card-body { padding: 1.2rem 1.4rem 1.2rem 1.8rem; }
+  .card-body h4 { font-family: 'Noto Serif Devanagari', serif; font-size: 0.72rem; color: var(--muted); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.65rem; padding-bottom: 0.3rem; border-bottom: 1px solid rgba(184,134,42,0.15); }
+  .order-text { font-family: 'Noto Serif Devanagari', serif; font-size: 0.92rem; line-height: 1.9; color: var(--ink); white-space: pre-wrap; word-break: break-word; }
+  .card-footer { padding: 0.55rem 1.4rem 0.55rem 1.8rem; background: rgba(184,134,42,0.07); border-top: 1px solid rgba(184,134,42,0.18); font-size: 0.74rem; color: var(--muted); font-style: italic; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+  .card-footer .judge-name { margin-left: auto; font-weight: 600; font-style: normal; color: var(--ink); }
+
+  /* Empty state */
+  .empty-state { text-align: center; padding: 4rem 1rem; color: var(--gold-pale); opacity: 0.65; }
+  .empty-state .icon { font-size: 3.5rem; margin-bottom: 1rem; display: block; }
+  .empty-state p { font-size: 0.9rem; line-height: 1.6; }
+
+  /* Toast */
+  #toast { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%) translateY(60px); padding: 0.55rem 1.5rem; border-radius: 3px; font-size: 0.82rem; box-shadow: 0 4px 24px rgba(0,0,0,0.4); transition: transform 0.28s ease; z-index: 9999; pointer-events: none; white-space: nowrap; }
+  #toast.show { transform: translateX(-50%) translateY(0); }
+  #toast.success { background: var(--green); color: #d4f0da; }
+  #toast.error   { background: var(--red-seal); color: #fdd; }
+  #toast.info    { background: var(--blue); color: #d0e4ff; }
+
+  /* Responsive */
+  @media (max-width: 720px) {
+    html, body { overflow: auto; height: auto; }
+    #main-layout { flex-direction: column; overflow: visible; }
+    #left-panel { width: 100% !important; border-right: none; border-bottom: 2px solid var(--border); max-height: 65vh; }
+    #left-panel.panel-collapsed { max-height: var(--collapse-tab-w); width: 100% !important; }
+    #panel-collapse-tab { top: auto; bottom: 0; right: 50%; transform: translateX(50%) rotate(90deg); }
+    .panel-inner-content { padding-right: 0; padding-bottom: calc(var(--collapse-tab-w) + 2px); }
+    #right-panel { padding: 1rem; }
+  }
+
+  /* Animations */
+  @keyframes cardIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes fadeOut { from { opacity:1; transform:translateY(0); } to { opacity:0; transform:translateY(-8px); } }
+  @keyframes spin   { to { transform: rotate(360deg); } }
+  @keyframes pulse  { 0%,100% { opacity:1; } 50% { opacity:0.35; } }
+
+  /* ══════════════════════════════════════════════
+     SEARCH BARS — in top fixed header
+  ══════════════════════════════════════════════ */
+
+  /* Header stretches to two rows when search bars present */
+  #top-header {
+    flex-wrap: wrap;
+    row-gap: 0.4rem;
+    align-items: center;
+  }
+
+  /* Each search group in the header */
+  .hdr-search {
+    display: flex; align-items: center; gap: 0.3rem;
+    flex-shrink: 1; min-width: 0;
+  }
+  .hdr-search-label {
+    font-size: 0.62rem; color: var(--gold-pale); font-weight: 600;
+    white-space: nowrap; opacity: 0.8; letter-spacing: 0.04em;
+  }
+  .search-input-wrap {
+    position: relative; display: flex; align-items: center;
+    min-width: 0;
+  }
+  .search-input-wrap svg.search-icon {
+    position: absolute; left: 6px; width: 12px; height: 12px;
+    color: rgba(240,216,150,0.5); pointer-events: none;
+  }
+  .search-input {
+    width: 160px;
+    padding: 0.26rem 22px 0.26rem 22px;
+    border: 1px solid rgba(184,134,42,0.35); border-radius: 3px;
+    background: rgba(255,255,255,0.08);
+    font-family: 'Noto Sans Devanagari', sans-serif;
+    font-size: 0.72rem; color: var(--gold-pale);
+    outline: none; transition: border-color 0.18s, background 0.18s;
+  }
+  .search-input:focus { border-color: var(--gold); background: rgba(255,255,255,0.13); }
+  .search-input::placeholder { color: rgba(240,216,150,0.35); }
+  .search-input.has-query { border-color: var(--gold-light); background: rgba(255,251,180,0.1); }
+
+  .search-clear {
+    position: absolute; right: 5px;
+    background: none; border: none; cursor: pointer; padding: 1px 2px;
+    color: rgba(240,216,150,0.5); line-height: 1; font-size: 0.72rem; display: none;
+  }
+  .search-input.has-query ~ .search-clear { display: block; }
+  .search-clear:hover { color: var(--gold-light); }
+
+  .search-nav-btn {
+    background: none; border: 1px solid rgba(184,134,42,0.35); border-radius: 3px;
+    padding: 2px 6px; cursor: pointer; color: var(--gold-pale); font-size: 0.75rem;
+    line-height: 1; transition: all 0.15s; flex-shrink: 0;
+  }
+  .search-nav-btn:hover { background: rgba(184,134,42,0.2); border-color: var(--gold); }
+  .search-nav-btn:disabled { opacity: 0.2; cursor: default; pointer-events: none; }
+
+  .search-count {
+    font-size: 0.62rem; color: rgba(240,216,150,0.6); white-space: nowrap;
+    flex-shrink: 0; min-width: 34px; text-align: center;
+  }
+  .search-count.has-results { color: #7de08a; font-weight: 700; }
+  .search-count.no-results  { color: #f08080; font-weight: 700; }
+
+  /* Compact checkbox label with tooltip */
+  .hdr-chk-label {
+    display: flex; align-items: center; gap: 0.2rem;
+    cursor: pointer; user-select: none; flex-shrink: 0;
+    font-size: 0.6rem;
+  }
+  .hdr-chk-label span {
+    color: rgba(240,216,150,0.6); font-weight: 600;
+    background: rgba(255,255,255,0.07); border: 1px solid rgba(184,134,42,0.3);
+    border-radius: 2px; padding: 1px 4px; transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .hdr-chk-label input[type="checkbox"] {
+    appearance: none; -webkit-appearance: none;
+    width: 11px; height: 11px;
+    border: 1.5px solid rgba(184,134,42,0.4); border-radius: 2px;
+    background: rgba(255,255,255,0.07); cursor: pointer; position: relative;
+    transition: all 0.12s; flex-shrink: 0;
+  }
+  .hdr-chk-label input[type="checkbox"]:checked {
+    background: var(--blue); border-color: #5b8cd6;
+  }
+  .hdr-chk-label input[type="checkbox"]:checked::after {
+    content: '✓'; position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -52%);
+    color: #fff; font-size: 8px; font-weight: 800; line-height: 1;
+  }
+  .hdr-chk-label input[type="checkbox"]:checked + span {
+    color: #a8d4ff; border-color: #5b8cd6; background: rgba(26,58,107,0.35);
+  }
+
+  /* Highlight marks */
+  mark.sh {
+    background: #ffe066; color: #1a1209; border-radius: 2px;
+    padding: 0 1px;
+  }
+  mark.sh.active {
+    background: #ff9900; color: #fff;
+    outline: 2px solid #ff6600;
+  }
+
+  /* Item row hidden by left search filter */
+  .item-row.search-hidden { display: none; }
+  /* Item row with match highlight — subtle glow on item content */
+  .item-row.search-match .item-content { background: rgba(255,224,102,0.15); }
+
+  /* Right panel card hidden by filter */
+  .order-card.rp-hidden { display: none; }
+
+</style>
+</head>
+<body>
+
+<!-- TOP HEADER -->
+<div id="top-header">
+  <div class="header-emblem">⚖️</div>
+  <div class="header-text">
+    <h1>काठमाडौं जिल्ला अदालत</h1>
+    <p>आदेश दर्पण — Order Viewer</p>
+  </div>
+  <div class="header-divider"></div>
+  <div class="header-sub">सङ्कलनकर्ताः<br>श्री शिवप्रसाद आचार्य</div>
+  <div class="header-divider"></div>
+  <!-- LEFT SEARCH (in header) -->
+  <div class="hdr-search" id="left-search-bar">
+    <div class="hdr-search-label">📋शीर्षक</div>
+    <div class="search-input-wrap">
+      <svg class="search-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="6.5" cy="6.5" r="4"/><line x1="10" y1="10" x2="14" y2="14"/></svg>
+      <input type="text" class="search-input" id="leftSearchInput" placeholder="बायाँ खोज्नुहोस्…" oninput="onLeftSearch()" onkeydown="searchKeyNav(event,'left')">
+      <button class="search-clear" onclick="clearLeftSearch()">✕</button>
+    </div>
+    <button class="search-nav-btn" id="leftNavPrev" onclick="leftSearchNav(-1)" disabled>‹</button>
+    <button class="search-nav-btn" id="leftNavNext" onclick="leftSearchNav(1)"  disabled>›</button>
+    <span class="search-count" id="leftSearchCount"></span>
+    <label class="hdr-chk-label" title="नेपाली सामान्यीकरण"><input type="checkbox" id="leftNormChk" onchange="onLeftSearch()"><span>स</span></label>
+  </div>
+  <div class="header-divider"></div>
+  <!-- RIGHT SEARCH (in header) -->
+  <div class="hdr-search" id="right-search-bar">
+    <div class="hdr-search-label">📄आदेश</div>
+    <div class="search-input-wrap">
+      <svg class="search-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="6.5" cy="6.5" r="4"/><line x1="10" y1="10" x2="14" y2="14"/></svg>
+      <input type="text" class="search-input" id="rightSearchInput" placeholder="दायाँ खोज्नुहोस्…" oninput="onRightSearch()" onkeydown="searchKeyNav(event,'right')">
+      <button class="search-clear" onclick="clearRightSearch()">✕</button>
+    </div>
+    <button class="search-nav-btn" id="rightNavPrev" onclick="rightSearchNav(-1)" disabled>‹</button>
+    <button class="search-nav-btn" id="rightNavNext" onclick="rightSearchNav(1)"  disabled>›</button>
+    <span class="search-count" id="rightSearchCount"></span>
+    <label class="hdr-chk-label" title="नेपाली सामान्यीकरण"><input type="checkbox" id="rightNormChk" onchange="onRightSearch()"><span>स</span></label>
+    <label class="hdr-chk-label" title="मिलेको मात्र देखाउनुहोस्"><input type="checkbox" id="rightFilterChk" onchange="onRightSearch()"><span>फि</span></label>
+  </div>
+</div>
+
+<!-- MAIN LAYOUT -->
+<div id="main-layout">
+
+  <!-- ── LEFT PANEL ── -->
+  <div id="left-panel">
+
+    <!-- Collapse/expand tab (always visible on right edge) -->
+    <div id="panel-collapse-tab" onclick="toggleLeftPanel()" title="Panel show/hide">
+      <span class="tab-icon" id="collapseTabIcon">◀</span>
+    </div>
+
+    <!-- Vertical label shown only when collapsed -->
+    <div id="panel-collapsed-label">मुद्दा चयन</div>
+
+    <!-- All content that hides on collapse -->
+    <div class="panel-inner-content">
+
+      <!-- Topbar: title + files toggle -->
+      <div class="panel-topbar">
+        <div class="panel-title-text">📋 मुद्दा चयन</div>
+        <button class="files-toggle-btn" id="filesToggleBtn" onclick="toggleFilesAccordion()">
+          <span id="ftbLabel">📂 फाइलहरू</span>
+          <span class="ftb-count" id="ftbCount" style="display:none">0</span>
+          <span class="ftb-arrow" id="ftbArrow">▼</span>
+        </button>
+      </div>
+
+      <!-- Files accordion -->
+      <div id="files-accordion">
+        <div id="ai-status-bar">
+          <div class="ai-spinner" id="ai-spinner"></div>
+          <span id="ai-status-text">प्रशोधन…</span>
+          <span class="file-progress" id="file-progress"></span>
+        </div>
+        <div class="loaded-files" id="loaded-files-list"></div>
+      </div>
+
+      <!-- Case list -->
+      <div class="list-section">
+        <div class="selection-header">
+          <span class="selection-label">मुद्दा सूची</span>
+          <span class="quick-btns">
+            <button class="quick-btn" onclick="selectAll()">सबै छान्नुहोस्</button>
+            <button class="quick-btn" onclick="deselectAll()">सबै हटाउनुहोस्</button>
+          </span>
+        </div>
+
+        <div class="scroll-outer">
+          <div class="scroll-arrow scroll-arrow-top disabled" id="scrollArrowTop"
+               onmousedown="startScrollClick('up')" onmouseup="stopScrollClick()" onmouseleave="stopScrollClick()"
+               ontouchstart="startScrollClick('up')" ontouchend="stopScrollClick()">
+            ▲ &nbsp;माथि स्क्रोल
+          </div>
+          <div class="case-list-scroll" id="caseListScroll" onscroll="updateScrollArrows()">
+            <div class="case-list" id="caseList">
+              <div class="menu-loading">⏳ फाइलहरू लोड हुँदैछन्…</div>
+            </div>
+          </div>
+          <div class="scroll-arrow scroll-arrow-bot disabled" id="scrollArrowBot"
+               onmousedown="startScrollClick('down')" onmouseup="stopScrollClick()" onmouseleave="stopScrollClick()"
+               ontouchstart="startScrollClick('down')" ontouchend="stopScrollClick()">
+            ▼ &nbsp;तल स्क्रोल
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer — live indicator + reset -->
+      <div class="panel-footer">
+        <div class="live-dot"></div>
+        <span class="live-label">LIVE</span>
+        <div class="sel-count">छानिएको: <span id="selCount">0</span> मुद्दा</div>
+        <button class="btn-reset" onclick="resetPanel()" title="पूर्वावस्थामा फर्कनुहोस्">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M13.5 8A5.5 5.5 0 1 1 8 2.5"/>
+            <polyline points="12,1 13.5,2.5 12,4"/>
+          </svg>
+          रिसेट
+        </button>
+      </div>
+
+    </div><!-- /panel-inner-content -->
+  </div><!-- /left-panel -->
+
+  <!-- ── RIGHT PANEL ── -->
+  <div id="right-panel">
+    <div id="results-area">
+      <div class="empty-state">
+        <span class="icon">📜</span>
+        <p>बाँयाबाट मुद्दाहरू छान्दा<br>आदेश तत्काल यहाँ देखिनेछ</p>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /main-layout -->
+
+<div id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════
+const allFiles         = [];
+const selectedIds      = new Set();
+const catCollapsed     = {};   // default: all collapsed (set true when file added)
+let filesAccordionOpen = false;
+let panelExpanded      = true;  // default: expanded
+
+// ═══════════════════════════════════════════════
+// LEFT PANEL COLLAPSE / EXPAND
+// ═══════════════════════════════════════════════
+function toggleLeftPanel() {
+  panelExpanded = !panelExpanded;
+  const panel = document.getElementById('left-panel');
+  const icon  = document.getElementById('collapseTabIcon');
+  panel.classList.toggle('panel-collapsed', !panelExpanded);
+  icon.textContent = panelExpanded ? '◀' : '▶';
+}
+
+// ═══════════════════════════════════════════════
+// FILES ACCORDION
+// ═══════════════════════════════════════════════
+function toggleFilesAccordion() {
+  filesAccordionOpen = !filesAccordionOpen;
+  document.getElementById('files-accordion').classList.toggle('open', filesAccordionOpen);
+  document.getElementById('filesToggleBtn').classList.toggle('open', filesAccordionOpen);
+  document.getElementById('ftbArrow').style.transform = filesAccordionOpen ? 'rotate(180deg)' : '';
+}
+function openFilesAccordion()  { if (!filesAccordionOpen) toggleFilesAccordion(); }
+function closeFilesAccordion() { if (filesAccordionOpen)  toggleFilesAccordion(); }
+
+function updateFilesToggleCount() {
+  const n = allFiles.length;
+  const el = document.getElementById('ftbCount');
+  el.textContent = n;
+  el.style.display = n > 0 ? 'inline' : 'none';
+}
+
+// ═══════════════════════════════════════════════
+// CLICK-TO-SCROLL
+// ═══════════════════════════════════════════════
+let _scrollInterval = null;
+const SCROLL_STEP = 60, SCROLL_MS = 80;
+
+function startScrollClick(dir) {
+  const el = document.getElementById('caseListScroll');
+  el.scrollBy({ top: dir==='up' ? -SCROLL_STEP : SCROLL_STEP, behavior:'smooth' });
+  _scrollInterval = setInterval(() => {
+    el.scrollBy({ top: dir==='up' ? -SCROLL_STEP : SCROLL_STEP, behavior:'auto' });
+    updateScrollArrows();
+  }, SCROLL_MS);
+}
+function stopScrollClick() { if (_scrollInterval) { clearInterval(_scrollInterval); _scrollInterval=null; } }
+function updateScrollArrows() {
+  const el=document.getElementById('caseListScroll');
+  const atTop=el.scrollTop<=2;
+  const atBot=el.scrollTop+el.clientHeight>=el.scrollHeight-2;
+  document.getElementById('scrollArrowTop').classList.toggle('disabled',atTop);
+  document.getElementById('scrollArrowBot').classList.toggle('disabled',atBot);
+}
+
+// ═══════════════════════════════════════════════
+// AI PARSER
+// ═══════════════════════════════════════════════
+async function parseWithAI(rawText, filename) {
+  const sys = `You are a Nepali court document parser.
+Extract ALL court orders from the raw text and return ONLY valid JSON — no markdown, no explanation.
+Return: { "label": "<filename without extension>", "cases": [ { "caseNo","plaintiff","defendant","type","court","judge","date","order" } ] }
+- plaintiff/defendant: strip dot sequences and the role word
+- type: strip trailing ।
+- order: complete paragraph starting from यसमा or प्रस्तुत, no separator lines
+Include ALL cases.`;
+  const res = await fetch("https://api.anthropic.com/v1/messages", {
+    method:"POST", headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({ model:"claude-haiku-4-5-20251001", max_tokens:4000, system:sys,
+      messages:[{role:"user",content:`File: "${filename}"\n\n${rawText}`}] })
+  });
+  if (!res.ok) throw new Error(`API ${res.status}`);
+  const data = await res.json();
+  const txt = data.content.filter(b=>b.type==="text").map(b=>b.text).join("")
+    .replace(/```json\s*/g,"").replace(/```\s*/g,"").trim();
+  try { return JSON.parse(txt); }
+  catch { const m=txt.match(/\{[\s\S]*\}/); if(m) return JSON.parse(m[0]); throw new Error("JSON parse"); }
+}
+
+// ═══════════════════════════════════════════════
+// SMART STRUCTURAL PARSER (mini-AI fallback)
+// Understands document structure by position, not just keywords
+// ═══════════════════════════════════════════════
+function parseWithRegex(rawText, filename) {
+  const text = rawText.replace(/\uFEFF/g,'').replace(/\r\n/g,'\n').replace(/\r/g,'\n');
+  const label = filename.replace(/\.txt$/i,'');
+
+  // Split into order blocks — each starts with श्री on its own line
+  const rawBlocks = text.split(/(?=\n\s*श्री\s*\n)/);
+  const blocks = rawBlocks
+    .map(b => b.trim())
+    .filter(b => b.length > 40 && /श्री/.test(b));
+
+  const cases = [];
+
+  blocks.forEach((block, idx) => {
+    const lines = block.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+
+    // ── STRUCTURAL CASE NUMBER DETECTION ──
+    // A case number line: contains a label word + alphanumeric combo
+    // Recognised labels: मुद्दा नं, निवेदन नं, दर्ता नं, रिट नं, फाइल नं, case no, etc.
+    // Fallback: any line with pattern like digits/letters-digits (e.g. ०८१-CP-७६०६)
+    const caseNoPattern = /[\u0900-\u097F0-9A-Za-z][\u0900-\u097F0-9A-Za-z]*[-\/][\u0900-\u097F0-9A-Za-z][\u0900-\u097F0-9A-Za-z]*[-\/]?[\u0900-\u097F0-9A-Za-z]*/;
+    const labelWords = /(?:मुद्दा|निवेदन|दर्ता|फाइल|रिट|नालिस|परमादेश|case|file|petition)\s*(?:नं|नम्बर|no|number)?[.:\s]*/i;
+
+    let caseNo = '';
+    let caseNoLineIdx = -1;
+
+    // First try: explicit label word
+    for (let i = 0; i < lines.length; i++) {
+      if (labelWords.test(lines[i])) {
+        const m = lines[i].match(caseNoPattern);
+        if (m) { caseNo = m[0].trim(); caseNoLineIdx = i; break; }
+        // label found but number might be on same line after colon
+        const after = lines[i].replace(labelWords,'').trim();
+        if (after.length > 2) { caseNo = after.replace(/[.:]/g,'').trim(); caseNoLineIdx = i; break; }
+      }
+    }
+
+    // Second try: structural — find a line that looks like an ID (alphanumeric with hyphens)
+    // typically appears after court/judge header lines but before party names
+    if (!caseNo) {
+      for (let i = 0; i < Math.min(lines.length, 10); i++) {
+        const m = lines[i].match(/^([A-Za-z\u0900-\u097F]{1,6}[-\/][A-Za-z0-9\u0900-\u097F]{1,10}(?:[-\/][A-Za-z0-9\u0900-\u097F]{1,10})*)$/);
+        if (m) { caseNo = m[1]; caseNoLineIdx = i; break; }
+        // inline pattern: 0XX-YY-ZZZZ style anywhere in line
+        const inline = lines[i].match(/\b0?[\u0966-\u096F0-9]{2,3}[-–][A-Z]{1,5}[-–][\u0966-\u096F0-9]{3,6}\b/);
+        if (inline) { caseNo = inline[0]; caseNoLineIdx = i; break; }
+      }
+    }
+
+    // ── STRUCTURAL PARTY DETECTION ──
+    // वादी line: contains वादी but NOT विरुद्ध/प्रतिवादी; typically after case no line
+    // Defendant: line after विरुद्ध separator
+
+    const viruddhaIdx = lines.findIndex(l => /^विरुद्ध\s*$/.test(l));
+
+    // Plaintiff: line that ends with वादी (after dots), before विरुद्ध
+    let plaintiff = '';
+    const plaintiffSearchEnd = viruddhaIdx > 0 ? viruddhaIdx : Math.min(lines.length, 12);
+    for (let i = Math.max(caseNoLineIdx+1, 0); i < plaintiffSearchEnd; i++) {
+      if (/वादी/.test(lines[i]) && !/प्रतिवादी|विरुद्ध/.test(lines[i])) {
+        plaintiff = lines[i].replace(/\.{2,}/g,'').replace(/वादी/g,'').trim();
+        break;
+      }
+    }
+    // If not found by keyword, take first meaningful name line after case number (positional)
+    if (!plaintiff && caseNoLineIdx >= 0) {
+      for (let i = caseNoLineIdx+1; i < Math.min(lines.length, caseNoLineIdx+5); i++) {
+        if (lines[i].length > 3 && !/(?:अदालत|इजलास|माननीय|आदेश|मुद्दाः|विरुद्ध)/.test(lines[i])) {
+          plaintiff = lines[i].replace(/\.{2,}/g,'').trim();
+          break;
+        }
+      }
+    }
+
+    // Defendant: structurally the line right after विरुद्ध
+    let defendant = '';
+    if (viruddhaIdx >= 0 && viruddhaIdx + 1 < lines.length) {
+      defendant = lines[viruddhaIdx+1].replace(/\.{2,}/g,'').replace(/प्रतिवादी/g,'').trim();
+    }
+    // Structural fallback: if no विरुद्ध found, try line after plaintiff that has a name-like pattern
+    if (!defendant && plaintiff) {
+      const pIdx = lines.findIndex(l => l.replace(/\.{2,}/g,'').trim().startsWith(plaintiff.slice(0,6)));
+      if (pIdx >= 0) {
+        for (let i = pIdx+1; i < Math.min(lines.length, pIdx+5); i++) {
+          if (lines[i].length > 3 && !/(?:अदालत|इजलास|माननीय|आदेश|मुद्दाः|विरुद्ध)/.test(lines[i])) {
+            defendant = lines[i].replace(/\.{2,}/g,'').replace(/प्रतिवादी/g,'').trim();
+            break;
+          }
+        }
+      }
+    }
+
+    // ── CASE TYPE: line with मुद्दाः or case type label ──
+    // Also catches निवेदन, दरखास्त, उजुरी as type indicators
+    let type = '';
+    const typeLine = lines.find(l => /(?:मुद्दाः|मुद्दा\s*:|विषय\s*:|subject\s*:)/i.test(l));
+    if (typeLine) {
+      type = typeLine.replace(/(?:मुद्दाः|मुद्दा\s*:|विषय\s*:|subject\s*:)/i,'').replace(/।$/,'').trim();
+    }
+
+    // ── DATE: structurally — line starting with इति ──
+    const dateLine = lines.find(l => /^इति/.test(l));
+    let date = '';
+    if (dateLine) {
+      date = dateLine.replace(/^इति\s*(?:सम्बत|संवत्?)?\s*/i,'').replace(/\.+।?\s*$/,'').trim();
+    }
+
+    // ── JUDGE: line with माननीय ──
+    const judgeLine = lines.find(l => /माननीय/.test(l));
+    let judge = '';
+    if (judgeLine) {
+      judge = judgeLine.replace(/माननीय\s*(?:जिल्ला\s*)?(?:न्यायाधीश\s*)?/i,'').trim();
+    }
+
+    // ── COURT: line with अदालत ──
+    const courtLine = lines.find(l => /अदालत/.test(l) && !/(?:आदेश|कार्यविधि)/.test(l));
+    const court = courtLine ? courtLine.trim() : 'काठमाडौं जिल्ला अदालत';
+
+    // ── ORDER BODY: paragraph after मुद्दाः or आदेश heading ──
+    const aIdx = lines.findIndex(l => /^आदेश\s*$/.test(l));
+    const mIdx = lines.findIndex((l,i) => i > Math.max(aIdx,0) && /मुद्दाः/.test(l));
+    const bodyStart = mIdx >= 0 ? mIdx+1 : (aIdx >= 0 ? aIdx+1 : 0);
+
+    // Structural: order body is a long paragraph (>50 chars), not a header/separator line
+    const bodyLines = [];
+    for (let i = bodyStart; i < lines.length; i++) {
+      if (/^\.{4,}/.test(lines[i]) || /^इति/.test(lines[i]) || /^\s*न्यायाधीश\s*$/.test(lines[i])) break;
+      // Skip very short lines that look like headers (court name, etc.)
+      if (lines[i].length < 3) continue;
+      bodyLines.push(lines[i]);
+    }
+    const order = bodyLines.join('\n').trim();
+
+    // Only add case if we have at least a case number or a non-trivial order body
+    if (!caseNo && order.length < 20 && idx > 0) return;
+
+    cases.push({ caseNo: caseNo || `(${idx+1})`, plaintiff, defendant, type, court, judge, date, order });
+  });
+
+  return { label, cases };
+}
+
+// ═══════════════════════════════════════════════
+// LOAD ONE FILE
+// ═══════════════════════════════════════════════
+async function loadTxtFile(src, index, total) {
+  const filename=src.split('/').pop();
+  const fileId='file_'+filename.replace(/[^a-zA-Z0-9]/g,'_');
+  updateFileRow(fileId,filename,'processing','AI विश्लेषण…');
+  updateAIStatus(`"${filename}" प्रशोधन…`,`${index}/${total}`);
+
+  let rawText;
+  try {
+    const res=await fetch(src);
+    if(!res.ok) throw new Error(`HTTP ${res.status}`);
+    rawText=await res.text();
+  } catch(e){ updateFileRow(fileId,filename,'error','फेला परेन'); return; }
+
+  let parsed,usedAI=false;
+  try   { parsed=await parseWithAI(rawText,filename); usedAI=true; }
+  catch { try{ parsed=parseWithRegex(rawText,filename); }catch{ updateFileRow(fileId,filename,'error','पार्स गर्न सकिएन'); return; } }
+
+  const cases=(parsed.cases||[]).map((c,i)=>({...c,id:fileId+'_c'+i}));
+  if(!cases.length){ updateFileRow(fileId,filename,'error','मुद्दा फेला परेन'); return; }
+
+  // DEFAULT: new file's category is COLLAPSED
+  catCollapsed[fileId] = true;
+
+  allFiles.push({id:fileId,label:parsed.label||filename.replace(/\.txt$/i,''),filename,source:'txt-import',usedAI,cases});
+  updateFileRow(fileId,filename,'done',`${cases.length} मुद्दा${usedAI?' (AI)':''}`,fileId);
+  updateFilesToggleCount();
+  rebuildCaseList();
+}
+
+// ═══════════════════════════════════════════════
+// LOAD ALL
+// ═══════════════════════════════════════════════
+async function loadAllTxtFiles() {
+  const tags=[...document.querySelectorAll('script[src]')]
+    .filter(s=>s.getAttribute('src').toLowerCase().endsWith('.txt'));
+  if(!tags.length){
+    document.getElementById('caseList').innerHTML=
+      '<div class="menu-loading">📄 कुनै .txt फाइल लिंक छैन<br><small>&lt;script src="file.txt"&gt; थप्नुहोस्</small></div>';
+    return;
+  }
+  openFilesAccordion();
+  const srcs=tags.map(s=>s.getAttribute('src'));
+  showAIStatus();
+  for(let i=0;i<srcs.length;i++) await loadTxtFile(srcs[i],i+1,srcs.length);
+  hideAIStatus();
+  closeFilesAccordion();
+  if(allFiles.length) showToast(`✓ ${allFiles.reduce((s,f)=>s+f.cases.length,0)} मुद्दा लोड भयो`,'success');
+  updateScrollArrows();
+}
+
+// ═══════════════════════════════════════════════
+// FILE ROW UI
+// ═══════════════════════════════════════════════
+function updateFileRow(id,filename,state,info,fileId){
+  const container=document.getElementById('loaded-files-list');
+  let row=document.getElementById('frow-'+id);
+  if(!row){row=document.createElement('div');row.id='frow-'+id;container.appendChild(row);}
+  row.className='file-row '+state;
+  row.innerHTML=`
+    <span class="dot"></span>
+    <span class="fname" title="${filename}">📄 ${filename}</span>
+    <span class="finfo">${info}</span>
+    ${fileId?`<button class="btn-json" onclick="downloadJson('${fileId}')">⬇ JSON</button>`:''}`;
+}
+
+// ═══════════════════════════════════════════════
+// AI STATUS
+// ═══════════════════════════════════════════════
+function showAIStatus(){ document.getElementById('ai-status-bar').classList.add('visible'); document.getElementById('ai-spinner').className='ai-spinner'; }
+function hideAIStatus(){
+  const sp=document.getElementById('ai-spinner');
+  sp.className='ai-spinner done'; sp.textContent='✓';
+  document.getElementById('ai-status-text').textContent='सम्पन्न';
+  document.getElementById('file-progress').textContent='';
+  setTimeout(()=>document.getElementById('ai-status-bar').classList.remove('visible'),2000);
+}
+function updateAIStatus(t,p){ document.getElementById('ai-status-text').textContent=t; document.getElementById('file-progress').textContent=p; }
+
+// ═══════════════════════════════════════════════
+// JSON DOWNLOAD
+// ═══════════════════════════════════════════════
+function downloadJson(fileId){
+  const f=allFiles.find(x=>x.id===fileId);if(!f)return;
+  const blob=new Blob([JSON.stringify({filename:f.filename,label:f.label,parsedAt:new Date().toISOString(),totalCases:f.cases.length,cases:f.cases.map(({id,...r})=>r)},null,2)],{type:'application/json'});
+  const a=Object.assign(document.createElement('a'),{href:URL.createObjectURL(blob),download:f.filename.replace(/\.txt$/i,'')+'.json'});
+  a.click();URL.revokeObjectURL(a.href);
+  showToast('✓ JSON डाउनलोड भयो','success');
+}
+
+// ═══════════════════════════════════════════════
+// BUILD CASE LIST
+// ═══════════════════════════════════════════════
+function rebuildCaseList(){
+  const container=document.getElementById('caseList');
+  if(!allFiles.length){container.innerHTML='<div class="menu-loading">लोड हुँदैछ…</div>';return;}
+  container.innerHTML='';
+
+  allFiles.forEach(file=>{
+    const isCollapsed = !!catCollapsed[file.id];  // default true = collapsed
+
+    // ── CATEGORY HEADER (ALL checkbox + expand arrow + label) ──
+    const catEl=document.createElement('div');
+    catEl.className='cat-header'+(isCollapsed?' collapsed':'');
+    catEl.id='cat-'+file.id;
+
+    // Check state for ALL checkbox
+    const allSelected = file.cases.every(c=>selectedIds.has(c.id));
+    const someSelected = !allSelected && file.cases.some(c=>selectedIds.has(c.id));
+
+    const aiTag=file.usedAI
+      ?`<span style="background:rgba(26,58,107,0.12);color:#1a3a6b;border:1px solid rgba(26,58,107,0.25);border-radius:20px;padding:1px 5px;font-size:0.55rem;font-weight:700;margin-left:3px">AI</span>`:'';
+
+    catEl.innerHTML=`
+      <div class="cat-check-zone" id="cat-chk-zone-${file.id}">
+        <input type="checkbox" id="cat-chk-${file.id}"
+          ${allSelected?'checked':''}
+          title="सबै छान्नुहोस् / हटाउनुहोस्">
+      </div>
+      <div class="cat-label-area" onclick="toggleCat('${file.id}')">
+        <span class="cat-arrow">▼</span>
+        <span class="cat-file-name">📁 ${file.label}${aiTag}</span>
+        <span class="cat-count-badge">${file.cases.length} मुद्दा</span>
+      </div>`;
+
+    container.appendChild(catEl);
+
+    // Wire up ALL checkbox
+    const catChk = catEl.querySelector(`#cat-chk-${file.id}`);
+    if(someSelected) { catChk.classList.add('indeterminate'); catChk.checked=false; }
+
+    catChk.addEventListener('change', e=>{
+      // Stop click from bubbling to label area
+      e.stopPropagation();
+      const check = e.target.checked;
+      file.cases.forEach(c=>{
+        if(check){ selectedIds.add(c.id); }
+        else { selectedIds.delete(c.id); }
+        const iChk=document.getElementById('chk-'+c.id);
+        if(iChk) iChk.checked=check;
+        document.getElementById('irow-'+c.id)?.classList.toggle('selected',check);
+      });
+      catChk.classList.remove('indeterminate');
+      updateSelCount();
+      renderSelectedOrders();
+    });
+
+    // Prevent label-area click from toggling checkbox
+    catEl.querySelector('.cat-check-zone').addEventListener('click', e=>e.stopPropagation());
+
+    // Items container — collapsed by default
+    const itemsEl=document.createElement('div');
+    itemsEl.className='cat-items'+(isCollapsed?' hidden':'');
+    itemsEl.id='items-'+file.id;
+
+    file.cases.forEach(c=>{
+      const row=document.createElement('div');
+      row.className='item-row'+(selectedIds.has(c.id)?' selected':'');
+      row.id='irow-'+c.id;
+
+      const shortPlaintiff=(c.plaintiff||'').length>22?(c.plaintiff||'').slice(0,22)+'…':(c.plaintiff||'—');
+
+      row.innerHTML=`
+        <div class="item-check-zone">
+          <input type="checkbox" id="chk-${c.id}" ${selectedIds.has(c.id)?'checked':''}>
+        </div>
+        <div class="item-content">
+          <div class="item-case-no">मुद्दा नं. ${c.caseNo}</div>
+          <div class="item-case-type">${c.type||'(मुद्दाको किसिम अज्ञात)'}</div>
+          <div class="item-case-sub">वादी: ${shortPlaintiff}</div>
+        </div>`;
+
+      row.addEventListener('click',e=>{
+        const chk=document.getElementById('chk-'+c.id);
+        if(e.target===chk) return;
+        chk.checked=!chk.checked;
+        onCheck(file.id,c.id,chk.checked);
+      });
+      row.querySelector('input[type="checkbox"]').addEventListener('change',e=>{
+        onCheck(file.id,c.id,e.target.checked);
+      });
+
+      itemsEl.appendChild(row);
+    });
+    container.appendChild(itemsEl);
+  });
+
+  setTimeout(updateScrollArrows,50);
+}
+
+// ═══════════════════════════════════════════════
+// TOGGLE CATEGORY
+// ═══════════════════════════════════════════════
+function toggleCat(id){
+  catCollapsed[id]=!catCollapsed[id];
+  document.getElementById('cat-'+id)?.classList.toggle('collapsed',!!catCollapsed[id]);
+  document.getElementById('items-'+id)?.classList.toggle('hidden',!!catCollapsed[id]);
+  setTimeout(updateScrollArrows,50);
+}
+
+// ═══════════════════════════════════════════════
+// SELECTION — triggers live render
+// ═══════════════════════════════════════════════
+function onCheck(fileId, caseId, checked){
+  checked ? selectedIds.add(caseId) : selectedIds.delete(caseId);
+  document.getElementById('irow-'+caseId)?.classList.toggle('selected',checked);
+  updateCatCheckbox(fileId);
+  updateSelCount();
+  renderSelectedOrders();
+}
+
+function updateCatCheckbox(fileId){
+  const file=allFiles.find(f=>f.id===fileId);
+  if(!file) return;
+  const chk=document.getElementById('cat-chk-'+fileId);
+  if(!chk) return;
+  const allSel=file.cases.every(c=>selectedIds.has(c.id));
+  const someSel=!allSel&&file.cases.some(c=>selectedIds.has(c.id));
+  chk.checked = allSel;
+  chk.classList.toggle('indeterminate', someSel);
+  if(someSel) chk.checked=false;
+}
+
+function updateSelCount(){
+  document.getElementById('selCount').textContent=selectedIds.size;
+}
+
+function selectAll(){
+  allFiles.forEach(f=>f.cases.forEach(c=>{
+    selectedIds.add(c.id);
+    const chk=document.getElementById('chk-'+c.id);if(chk)chk.checked=true;
+    document.getElementById('irow-'+c.id)?.classList.add('selected');
+  }));
+  allFiles.forEach(f=>updateCatCheckbox(f.id));
+  updateSelCount();
+  renderSelectedOrders();
+}
+
+function deselectAll(){
+  selectedIds.clear();
+  allFiles.forEach(f=>{
+    f.cases.forEach(c=>{
+      const chk=document.getElementById('chk-'+c.id);if(chk)chk.checked=false;
+      document.getElementById('irow-'+c.id)?.classList.remove('selected');
+    });
+    updateCatCheckbox(f.id);
+  });
+  updateSelCount();
+  renderSelectedOrders();
+}
+
+// ═══════════════════════════════════════════════
+// LIVE RENDER — called on every selection change
+// ═══════════════════════════════════════════════
+function renderSelectedOrders(){
+  const area = document.getElementById('results-area');
+
+  if(!selectedIds.size){
+    area.innerHTML=`
+      <div class="empty-state">
+        <span class="icon">📜</span>
+        <p>बाँयाबाट मुद्दाहरू छान्दा<br>आदेश तत्काल यहाँ देखिनेछ</p>
+      </div>`;
+    return;
+  }
+
+  // Build set of currently rendered card IDs
+  const existingCards = new Set([...area.querySelectorAll('.order-card[data-id]')].map(el=>el.dataset.id));
+  const wantedIds = new Set(selectedIds);
+
+  // Remove cards that are no longer selected
+  area.querySelectorAll('.order-card[data-id]').forEach(el=>{
+    if(!wantedIds.has(el.dataset.id)){
+      el.style.animation='fadeOut 0.2s ease forwards';
+      setTimeout(()=>el.remove(), 200);
+    }
+  });
+
+  // Update header
+  let header = area.querySelector('.results-header');
+  if(!header){
+    header = document.createElement('div');
+    header.className='results-header';
+    area.insertBefore(header, area.firstChild);
+  }
+  header.textContent = `📄 ${selectedIds.size} आदेश`;
+
+  // Add newly selected cards (preserve order: by file then case)
+  let insertAfter = header;
+  allFiles.forEach(file=>{
+    file.cases.forEach(c=>{
+      if(!selectedIds.has(c.id)) return;
+
+      // Already rendered? Just reposition in order (skip reinsert for perf)
+      if(existingCards.has(c.id)){
+        const existing = area.querySelector(`.order-card[data-id="${c.id}"]`);
+        if(existing) { insertAfter.after(existing); insertAfter=existing; }
+        return;
+      }
+
+      // New card
+      const srcTag = file.usedAI
+        ? `<span class="src-tag">AI</span>`
+        : `<span class="src-tag" style="background:rgba(184,134,42,0.1);color:var(--muted);border-color:rgba(184,134,42,0.3)">regex</span>`;
+
+      const card = document.createElement('div');
+      card.className='order-card';
+      card.dataset.id = c.id;
+      card.innerHTML=`
+        <div class="card-header">
+          <div class="card-meta">
+            <div class="card-court">${c.court||'काठमाडौं जिल्ला अदालत'} | ${file.label} ${srcTag}</div>
+            <div class="card-case-no">मुद्दा नं. ${c.caseNo}</div>
+            <div class="card-parties"><strong>वादी:</strong> ${c.plaintiff||'—'}<br><strong>प्रतिवादी:</strong> ${c.defendant||'—'}</div>
+          </div>
+          <div class="case-badge">${c.type||'मुद्दा'}</div>
+        </div>
+        <div class="card-body">
+          <h4>आदेश <button class="copy-order-btn" onclick="copyOrder(this)" title="आदेश प्रतिलिपि गर्नुहोस्"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="9" height="10" rx="1.5"/><path d="M3 11V3a1 1 0 0 1 1-1h7"/></svg></button></h4>
+          <div class="order-text">${c.order||'(आदेश उपलब्ध छैन)'}</div>
+        </div>
+        <div class="card-footer">
+          <span>📅 इति संवत् ${c.date||'—'} रोज १ शुभम्</span>
+          <span class="judge-name">⚖️ ${c.judge||'न्यायाधीश'}</span>
+        </div>`;
+
+      insertAfter.after(card);
+      insertAfter = card;
+    });
+  });
+  // Re-apply right search highlights if active
+  if(typeof rightSearch !== 'undefined' && rightSearch.query){
+    setTimeout(onRightSearch, 40);
+  }
+}
+
+// ═══════════════════════════════════════════════
+// RESET PANEL — restore everything to default state
+// ═══════════════════════════════════════════════
+function resetPanel(){
+  // 1. Deselect all cases
+  selectedIds.clear();
+  allFiles.forEach(f=>{
+    f.cases.forEach(c=>{
+      const chk=document.getElementById('chk-'+c.id);
+      if(chk) chk.checked=false;
+      document.getElementById('irow-'+c.id)?.classList.remove('selected');
+    });
+    updateCatCheckbox(f.id);
+    // 2. Collapse all file categories
+    catCollapsed[f.id]=true;
+    document.getElementById('cat-'+f.id)?.classList.add('collapsed');
+    document.getElementById('items-'+f.id)?.classList.add('hidden');
+  });
+  // 3. Close files accordion
+  if(filesAccordionOpen) toggleFilesAccordion();
+  // 4. Expand left panel if collapsed
+  if(!panelExpanded) toggleLeftPanel();
+  // 5. Update count & re-render
+  updateSelCount();
+  renderSelectedOrders();
+  // 6. Scroll case list back to top
+  document.getElementById('caseListScroll').scrollTo({top:0,behavior:'smooth'});
+  updateScrollArrows();
+  // 7. Clear both search bars
+  clearLeftSearch();
+  clearRightSearch();
+  showToast('✓ पूर्वावस्थामा फर्कियो','info');
+}
+
+// ═══════════════════════════════════════════════
+// COPY ORDER TEXT TO CLIPBOARD
+// ═══════════════════════════════════════════════
+function copyOrder(btn){
+  // Walk up to card-body, then find .order-text
+  const cardBody = btn.closest('.card-body');
+  if(!cardBody) return;
+  const orderText = cardBody.querySelector('.order-text');
+  if(!orderText) return;
+  const text = orderText.innerText || orderText.textContent || '';
+  navigator.clipboard.writeText(text.trim()).then(()=>{
+    btn.classList.add('copied');
+    setTimeout(()=>btn.classList.remove('copied'), 1800);
+    showToast('✓ आदेश प्रतिलिपि भयो','success');
+  }).catch(()=>{
+    // Fallback for older browsers
+    const ta = document.createElement('textarea');
+    ta.value = text.trim();
+    ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    btn.classList.add('copied');
+    setTimeout(()=>btn.classList.remove('copied'), 1800);
+    showToast('✓ आदेश प्रतिलिपि भयो','success');
+  });
+}
+
+// ═══════════════════════════════════════════════
+// TOAST
+// ═══════════════════════════════════════════════
+let _tt;
+function showToast(msg,type='info'){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.className=`toast ${type} show`;
+  clearTimeout(_tt);_tt=setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+
+// ═══════════════════════════════════════════════
+// NEPALI NORMALIZER
+// ═══════════════════════════════════════════════
+const NepaliNormalizer = {
+  vowelMap:    { 'ी': 'ि', 'ू': 'ु' },
+  sibilantMap: { 'श': 'स', 'ष': 'स' },
+  nasalMap:    { 'ङ': 'न', 'ण': 'न', 'ञ': 'न', 'ं': 'न्' },
+  vaBaMap:     { 'व': 'ब' },
+  normalize(text) {
+    if (!text) return '';
+    let n = text.normalize('NFC').replace(/\u200D/g,'').replace(/\u200C/g,'');
+    for (const [f,t] of Object.entries(this.vowelMap))    n = n.split(f).join(t);
+    for (const [f,t] of Object.entries(this.sibilantMap)) n = n.split(f).join(t);
+    for (const [f,t] of Object.entries(this.nasalMap))    n = n.split(f).join(t);
+    for (const [f,t] of Object.entries(this.vaBaMap))     n = n.split(f).join(t);
+    return n;
+  },
+  isDevanagari(text) { return /[\u0900-\u097F]/.test(text); },
+  mapToOriginal(normPos, original, normalized) {
+    if (normPos <= 0) return 0;
+    if (normPos >= normalized.length) return original.length;
+    let origIdx=0, normIdx=0;
+    while (normIdx < normPos && origIdx < original.length) {
+      if (original[origIdx]==='\u200D'||original[origIdx]==='\u200C'){ origIdx++; continue; }
+      origIdx++; normIdx++;
+    }
+    while (origIdx < original.length && (original[origIdx]==='\u200D'||original[origIdx]==='\u200C')) origIdx++;
+    return origIdx;
+  }
+};
+
+// ═══════════════════════════════════════════════
+// SEARCH STATE
+// ═══════════════════════════════════════════════
+const leftSearch  = { query:'', useNorm:false, hits:[], cur:0 };
+const rightSearch = { query:'', useNorm:false, filter:false, hits:[], cur:0 };
+
+// ─── UTILITY: escape for regex ───
+function escRe(s){ return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); }
+
+// ─── UTILITY: get normalised or raw version ───
+function maybeNorm(text, useNorm){
+  return useNorm ? NepaliNormalizer.normalize(text) : text;
+}
+
+// ─── UTILITY: highlight all matches in a text node parent, return mark elements ───
+// Works on original DOM text; uses NepaliNormalizer.mapToOriginal for norm mode.
+function highlightInElement(el, query, useNorm, cls){
+  // Restore any existing marks first
+  el.querySelectorAll('mark.sh').forEach(m=>{
+    m.replaceWith(document.createTextNode(m.textContent));
+  });
+  el.normalize();
+  if (!query) return [];
+
+  const marks = [];
+  const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, {
+    acceptNode(n){
+      // skip inside mark tags to avoid double-wrapping
+      return n.parentElement.tagName === 'MARK' ? NodeFilter.FILTER_SKIP : NodeFilter.FILTER_ACCEPT;
+    }
+  });
+
+  const nodes = [];
+  while(walker.nextNode()) nodes.push(walker.currentNode);
+
+  for(const node of nodes){
+    const orig = node.nodeValue;
+    const norm = useNorm ? NepaliNormalizer.normalize(orig) : orig;
+    const re   = new RegExp(escRe(query), 'gi');
+    let m, segments = [], last = 0;
+
+    while((m = re.exec(norm)) !== null){
+      const normStart = m.index;
+      const normEnd   = m.index + m[0].length;
+      const origStart = useNorm ? NepaliNormalizer.mapToOriginal(normStart, orig, norm) : normStart;
+      const origEnd   = useNorm ? NepaliNormalizer.mapToOriginal(normEnd,   orig, norm) : normEnd;
+      if(origStart >= origEnd) continue;
+
+      segments.push({ start:origStart, end:origEnd });
+    }
+
+    if(!segments.length) continue;
+
+    const frag = document.createDocumentFragment();
+    let pos = 0;
+    for(const seg of segments){
+      if(seg.start > pos) frag.appendChild(document.createTextNode(orig.slice(pos, seg.start)));
+      const mark = document.createElement('mark');
+      mark.className = cls;
+      mark.textContent = orig.slice(seg.start, seg.end);
+      frag.appendChild(mark);
+      marks.push(mark);
+      pos = seg.end;
+    }
+    if(pos < orig.length) frag.appendChild(document.createTextNode(orig.slice(pos)));
+    node.parentNode.replaceChild(frag, node);
+  }
+  return marks;
+}
+
+// ─── UTILITY: scroll mark into view smoothly ───
+function scrollToMark(mark){
+  if(!mark) return;
+  mark.scrollIntoView({ behavior:'smooth', block:'center' });
+}
+
+// ─── UTILITY: set active mark ───
+function setActiveMark(marks, idx){
+  marks.forEach((m,i)=>{ m.classList.toggle('active', i===idx); });
+  if(marks[idx]) scrollToMark(marks[idx]);
+}
+
+// ─── UTILITY: update count badge ───
+function updateCountBadge(el, cur, total){
+  if(!total){ el.textContent = total===0 && el.dataset.hadQuery==='1' ? '০ भेटिएन' : ''; el.className='search-count'+(total===0&&el.dataset.hadQuery==='1'?' no-results':''); return; }
+  el.textContent = (cur+1)+' / '+total;
+  el.className = 'search-count has-results';
+}
+
+// ════════════════════════════════════════════════════════
+// LEFT PANEL SEARCH
+// ════════════════════════════════════════════════════════
+function onLeftSearch(){
+  const inp  = document.getElementById('leftSearchInput');
+  const norm = document.getElementById('leftNormChk').checked;
+  const q    = inp.value.trim();
+  leftSearch.query   = q;
+  leftSearch.useNorm = norm;
+  inp.classList.toggle('has-query', !!q);
+
+  // Clear previous highlights & reset
+  document.querySelectorAll('#caseList mark.sh').forEach(m=>m.replaceWith(document.createTextNode(m.textContent)));
+  document.querySelectorAll('#caseList').forEach(el=>el.normalize());
+  document.querySelectorAll('.item-row').forEach(r=>{r.classList.remove('search-hidden','search-match');});
+  leftSearch.hits = [];
+  leftSearch.cur  = 0;
+
+  const countEl = document.getElementById('leftSearchCount');
+  countEl.dataset.hadQuery = q ? '1' : '0';
+
+  if(!q){
+    updateCountBadge(countEl, 0, null);
+    document.getElementById('leftNavPrev').disabled = true;
+    document.getElementById('leftNavNext').disabled = true;
+    return;
+  }
+
+  const normQ = maybeNorm(q, norm);
+
+  // For each case item row: test all text fields, show/hide, highlight
+  allFiles.forEach(file=>{
+    let fileHasMatch = false;
+    file.cases.forEach(c=>{
+      const row = document.getElementById('irow-'+c.id);
+      if(!row) return;
+
+      // Searchable text: caseNo + type + plaintiff + defendant
+      const fields = [c.caseNo||'', c.type||'', c.plaintiff||'', c.defendant||''].join(' ');
+      const testStr = maybeNorm(fields, norm);
+      const matches = testStr.toLowerCase().includes(normQ.toLowerCase());
+
+      if(!matches){
+        row.classList.add('search-hidden');
+        return;
+      }
+      row.classList.remove('search-hidden');
+      row.classList.add('search-match');
+      fileHasMatch = true;
+
+      // Highlight inside .item-content
+      const content = row.querySelector('.item-content');
+      if(content){
+        const marks = highlightInElement(content, normQ, norm, 'sh');
+        leftSearch.hits.push(...marks);
+      }
+    });
+
+    // Auto-expand category if it has matches
+    if(fileHasMatch && catCollapsed[file.id]){
+      catCollapsed[file.id]=false;
+      document.getElementById('cat-'+file.id)?.classList.remove('collapsed');
+      document.getElementById('items-'+file.id)?.classList.remove('hidden');
+    }
+  });
+
+  leftSearch.cur = 0;
+  if(leftSearch.hits.length) setActiveMark(leftSearch.hits, 0);
+  updateCountBadge(countEl, leftSearch.cur, leftSearch.hits.length);
+  document.getElementById('leftNavPrev').disabled = leftSearch.hits.length < 2;
+  document.getElementById('leftNavNext').disabled = leftSearch.hits.length < 2;
+  setTimeout(updateScrollArrows, 50);
+}
+
+function leftSearchNav(dir){
+  if(!leftSearch.hits.length) return;
+  leftSearch.cur = (leftSearch.cur + dir + leftSearch.hits.length) % leftSearch.hits.length;
+  setActiveMark(leftSearch.hits, leftSearch.cur);
+  updateCountBadge(document.getElementById('leftSearchCount'), leftSearch.cur, leftSearch.hits.length);
+}
+
+function clearLeftSearch(){
+  document.getElementById('leftSearchInput').value='';
+  onLeftSearch();
+}
+
+// ════════════════════════════════════════════════════════
+// RIGHT PANEL SEARCH
+// ════════════════════════════════════════════════════════
+function onRightSearch(){
+  const inp    = document.getElementById('rightSearchInput');
+  const norm   = document.getElementById('rightNormChk').checked;
+  const filter = document.getElementById('rightFilterChk').checked;
+  const q      = inp.value.trim();
+  rightSearch.query   = q;
+  rightSearch.useNorm = norm;
+  rightSearch.filter  = filter;
+  inp.classList.toggle('has-query', !!q);
+
+  // Clear all existing highlights
+  document.querySelectorAll('#results-area mark.sh').forEach(m=>m.replaceWith(document.createTextNode(m.textContent)));
+  document.querySelectorAll('#results-area').forEach(el=>el.normalize());
+  document.querySelectorAll('.order-card').forEach(c=>{c.classList.remove('rp-hidden');});
+  rightSearch.hits = [];
+  rightSearch.cur  = 0;
+
+  const countEl = document.getElementById('rightSearchCount');
+  countEl.dataset.hadQuery = q ? '1' : '0';
+
+  if(!q){
+    updateCountBadge(countEl, 0, null);
+    document.getElementById('rightNavPrev').disabled = true;
+    document.getElementById('rightNavNext').disabled = true;
+    return;
+  }
+
+  const normQ = maybeNorm(q, norm);
+
+  document.querySelectorAll('.order-card[data-id]').forEach(card=>{
+    // Search across entire card text (header + body)
+    const cardText = maybeNorm(card.innerText||card.textContent||'', norm);
+    const hasMatch = cardText.toLowerCase().includes(normQ.toLowerCase());
+
+    if(filter && !hasMatch){
+      card.classList.add('rp-hidden');
+      return;
+    }
+
+    if(!hasMatch) return;
+
+    // Highlight inside card
+    const marks = highlightInElement(card, normQ, norm, 'sh');
+    rightSearch.hits.push(...marks);
+  });
+
+  rightSearch.cur = 0;
+  if(rightSearch.hits.length) setActiveMark(rightSearch.hits, 0);
+  updateCountBadge(countEl, rightSearch.cur, rightSearch.hits.length);
+  document.getElementById('rightNavPrev').disabled = rightSearch.hits.length < 2;
+  document.getElementById('rightNavNext').disabled = rightSearch.hits.length < 2;
+}
+
+function rightSearchNav(dir){
+  if(!rightSearch.hits.length) return;
+  rightSearch.cur = (rightSearch.cur + dir + rightSearch.hits.length) % rightSearch.hits.length;
+  setActiveMark(rightSearch.hits, rightSearch.cur);
+  updateCountBadge(document.getElementById('rightSearchCount'), rightSearch.cur, rightSearch.hits.length);
+}
+
+function clearRightSearch(){
+  document.getElementById('rightSearchInput').value='';
+  onRightSearch();
+}
+
+// keyboard: Enter = next, Shift+Enter = prev
+function searchKeyNav(e, panel){
+  if(e.key==='Enter'){
+    e.preventDefault();
+    panel==='left' ? leftSearchNav(e.shiftKey?-1:1) : rightSearchNav(e.shiftKey?-1:1);
+  } else if(e.key==='Escape'){
+    panel==='left' ? clearLeftSearch() : clearRightSearch();
+  }
+}
+
+// right search re-applied inside renderSelectedOrders directly
+
+// ═══════════════════════════════════════════════
+// BOOT
+// ═══════════════════════════════════════════════
+window.addEventListener('DOMContentLoaded',()=>setTimeout(loadAllTxtFiles,100));
+</script>
+
+<!-- ════════════════════════════════════════════
+     ADD YOUR .TXT FILES BELOW
+     Place files in the same folder as index.html
+════════════════════════════════════════════ -->
+<script src="courtfee.txt"></script>
+<script src="अन्य आदेश.txt"></script>
+<script src="कोर्ट फि सुविधा प्रदान गर्ने.txt"></script>
+<script src="१२३ नं बमोजिमको म्याद.txt"></script>
+<script src="१०१ नं बमोजिम साक्षी बुझ्ने आदेश.txt"></script>
+<script src="गोरखापत्रमा सूचना प्रकाशन गर्ने.txt"></script>
+<script src="तायदाती फाँटबारी.txt"></script>
+</body>
+</html>
