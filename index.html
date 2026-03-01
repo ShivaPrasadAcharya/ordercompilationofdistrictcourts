@@ -287,9 +287,9 @@
   ══════════════════════════════════════════════ */
   .cat-header {
     display: flex; align-items: center;
-    background: linear-gradient(90deg, #6b2a0a 0%, #8b3a12 50%, #6b2a0a 100%);
-    border-bottom: 1.5px solid var(--gold);
-    border-top: 1px solid rgba(184,134,42,0.25);
+    background: linear-gradient(90deg, #fdf6e3 0%, #f9efcf 50%, #fdf6e3 100%);
+    border-bottom: 1.5px solid rgba(184,134,42,0.35);
+    border-top: 1px solid rgba(184,134,42,0.18);
     position: sticky; top: 0; z-index: 2;
     user-select: none;
     min-height: 36px;
@@ -306,20 +306,20 @@
   .cat-check-zone input[type="checkbox"] {
     appearance: none; -webkit-appearance: none;
     width: 17px; height: 17px;
-    border: 1.5px solid rgba(253,232,176,0.5); border-radius: 3px;
-    background: rgba(255,255,255,0.08); cursor: pointer;
+    border: 1.5px solid rgba(184,134,42,0.45); border-radius: 3px;
+    background: #fff; cursor: pointer;
     transition: all 0.12s; position: relative; display: block;
   }
   .cat-check-zone input[type="checkbox"]:checked {
-    background: var(--gold-light); border-color: var(--gold-pale);
+    background: var(--red-seal); border-color: var(--red-seal);
   }
   .cat-check-zone input[type="checkbox"]:checked::after {
     content: '✓'; position: absolute; top: 50%; left: 50%;
     transform: translate(-50%, -52%);
-    color: #2c1206; font-size: 11px; font-weight: 900; line-height: 1;
+    color: #fff; font-size: 11px; font-weight: 700; line-height: 1;
   }
   .cat-check-zone input[type="checkbox"].indeterminate {
-    background: rgba(184,134,42,0.45); border-color: var(--gold);
+    background: var(--gold); border-color: var(--gold);
   }
   .cat-check-zone input[type="checkbox"].indeterminate::after {
     content: '−'; position: absolute; top: 50%; left: 50%;
@@ -327,7 +327,7 @@
     color: #fff; font-size: 14px; font-weight: 700; line-height: 1;
   }
   .cat-check-zone input[type="checkbox"]:hover:not(:checked):not(.indeterminate) {
-    border-color: var(--gold-pale); box-shadow: 0 0 0 2px rgba(253,232,176,0.15);
+    border-color: var(--red-seal); box-shadow: 0 0 0 2px rgba(139,26,26,0.1);
   }
 
   /* Label area — click to expand/collapse */
@@ -338,13 +338,15 @@
     cursor: pointer;
     transition: background 0.15s;
   }
-  .cat-label-area:hover { background: rgba(255,255,255,0.08); }
-  .cat-arrow { font-size: 0.58rem; transition: transform 0.2s; color: var(--gold-pale); flex-shrink: 0; }
+  .cat-label-area:hover { background: rgba(184,134,42,0.1); }
+  .cat-arrow { font-size: 0.58rem; transition: transform 0.2s; color: var(--gold); flex-shrink: 0; }
   .cat-header.collapsed .cat-arrow { transform: rotate(-90deg); }
-  .cat-file-name { font-family: 'Noto Serif Devanagari', serif; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; color: #fde8b0; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .cat-count-badge { font-size: 0.58rem; color: rgba(253,232,176,0.7); white-space: nowrap; flex-shrink: 0; background: rgba(0,0,0,0.25); padding: 1px 7px; border-radius: 10px; font-family: monospace; }
+  .cat-file-name { font-family: 'Noto Serif Devanagari', serif; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; color: var(--red-seal); flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .cat-count-badge { font-size: 0.58rem; color: var(--muted); white-space: nowrap; flex-shrink: 0; background: rgba(184,134,42,0.12); padding: 1px 7px; border-radius: 10px; font-family: monospace; border: 1px solid rgba(184,134,42,0.2); }
 
   .cat-items.hidden { display: none; }
+  .cat-header.search-hidden { display: none; }
+  .cat-items.search-hidden  { display: none; }
 
   /* ══════════ ITEM ROW ══════════ */
   /* Tab indent: 10px left gap before the checkbox zone */
@@ -426,17 +428,18 @@
     animation: pulse 2s infinite;
   }
   .live-label { font-size: 0.62rem; color: var(--green); font-weight: 600; white-space: nowrap; }
-  /* Reset button */
+  /* Reset button — solid maroon */
   .btn-reset {
     display: flex; align-items: center; gap: 0.3rem;
-    background: transparent; border: 1px solid rgba(139,26,26,0.3);
-    border-radius: 3px; padding: 0.3rem 0.65rem;
+    background: var(--red-seal); border: 1px solid #6b1010;
+    border-radius: 3px; padding: 0.28rem 0.65rem;
     font-family: 'Noto Sans Devanagari', sans-serif; font-size: 0.68rem;
-    color: var(--muted); cursor: pointer; transition: all 0.18s;
+    color: #fde8c8; cursor: pointer; transition: all 0.18s;
     white-space: nowrap; user-select: none;
+    box-shadow: 0 1px 4px rgba(139,26,26,0.35);
   }
-  .btn-reset:hover { border-color: var(--red-seal); color: var(--red-seal); background: rgba(139,26,26,0.06); }
-  .btn-reset:active { background: rgba(139,26,26,0.12); }
+  .btn-reset:hover { background: #6b1010; border-color: #4a0a0a; color: #fff; }
+  .btn-reset:active { background: #4a0a0a; }
   .btn-reset svg { width: 11px; height: 11px; flex-shrink: 0; }
   /* Copy-to-clipboard button on card */
   .copy-order-btn {
@@ -641,11 +644,10 @@
 <div id="top-header">
   <div class="header-emblem">⚖️</div>
   <div class="header-text">
-    <h1>काठमाडौं जिल्ला अदालत</h1>
-    <p>आदेश दर्पण — Order Viewer</p>
-  </div>
+    <h1>आदेश दर्फण</h1>
+    <p> Order Viewer</p>  </div>
   <div class="header-divider"></div>
-  <div class="header-sub">माननीय जिल्ला न्यायाधीश<br>श्री ईश्वर पराजुली</div>
+  <div class="header-sub">सङ्कलनकर्ता<br>श्री शिवप्रसाद आचार्य </div>
   <div class="header-divider"></div>
   <!-- LEFT SEARCH (in header) -->
   <div class="hdr-search" id="left-search-bar">
@@ -659,6 +661,7 @@
     <button class="search-nav-btn" id="leftNavNext" onclick="leftSearchNav(1)"  disabled>›</button>
     <span class="search-count" id="leftSearchCount"></span>
     <label class="hdr-chk-label" title="नेपाली सामान्यीकरण"><input type="checkbox" id="leftNormChk" onchange="onLeftSearch()"><span>स</span></label>
+    <label class="hdr-chk-label" title="फोल्डर नाममा मात्र खोज्नुहोस्"><input type="checkbox" id="leftFolderChk" onchange="onLeftSearch()"><span>फो</span></label>
   </div>
   <div class="header-divider"></div>
   <!-- RIGHT SEARCH (in header) -->
@@ -694,13 +697,20 @@
     <!-- All content that hides on collapse -->
     <div class="panel-inner-content">
 
-      <!-- Topbar: title + files toggle -->
+      <!-- Topbar: title + files toggle + reset -->
       <div class="panel-topbar">
         <div class="panel-title-text">📋 मुद्दा चयन</div>
         <button class="files-toggle-btn" id="filesToggleBtn" onclick="toggleFilesAccordion()">
           <span id="ftbLabel">📂 फाइलहरू</span>
           <span class="ftb-count" id="ftbCount" style="display:none">0</span>
           <span class="ftb-arrow" id="ftbArrow">▼</span>
+        </button>
+        <button class="btn-reset" onclick="resetPanel()" title="पूर्वावस्थामा फर्कनुहोस्">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M13.5 8A5.5 5.5 0 1 1 8 2.5"/>
+            <polyline points="12,1 13.5,2.5 12,4"/>
+          </svg>
+          रिसेट
         </button>
       </div>
 
@@ -743,18 +753,11 @@
         </div>
       </div>
 
-      <!-- Footer — live indicator + reset -->
+      <!-- Footer — live indicator + count -->
       <div class="panel-footer">
         <div class="live-dot"></div>
         <span class="live-label">LIVE</span>
         <div class="sel-count">छानिएको: <span id="selCount">0</span> मुद्दा</div>
-        <button class="btn-reset" onclick="resetPanel()" title="पूर्वावस्थामा फर्कनुहोस्">
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M13.5 8A5.5 5.5 0 1 1 8 2.5"/>
-            <polyline points="12,1 13.5,2.5 12,4"/>
-          </svg>
-          रिसेट
-        </button>
       </div>
 
     </div><!-- /panel-inner-content -->
@@ -1671,9 +1674,10 @@ function updateCountBadge(el, cur, total){
 // LEFT PANEL SEARCH
 // ════════════════════════════════════════════════════════
 function onLeftSearch(){
-  const inp  = document.getElementById('leftSearchInput');
-  const norm = document.getElementById('leftNormChk').checked;
-  const q    = inp.value.trim();
+  const inp        = document.getElementById('leftSearchInput');
+  const norm       = document.getElementById('leftNormChk').checked;
+  const folderOnly = document.getElementById('leftFolderChk').checked;
+  const q          = inp.value.trim();
   leftSearch.query   = q;
   leftSearch.useNorm = norm;
   inp.classList.toggle('has-query', !!q);
@@ -1681,7 +1685,9 @@ function onLeftSearch(){
   // Clear previous highlights & reset
   document.querySelectorAll('#caseList mark.sh').forEach(m=>m.replaceWith(document.createTextNode(m.textContent)));
   document.querySelectorAll('#caseList').forEach(el=>el.normalize());
-  document.querySelectorAll('.item-row').forEach(r=>{r.classList.remove('search-hidden','search-match');});
+  document.querySelectorAll('.item-row').forEach(r=>r.classList.remove('search-hidden','search-match'));
+  // Also un-hide any previously hidden cat-items containers
+  document.querySelectorAll('.cat-header').forEach(h=>h.classList.remove('search-hidden'));
   leftSearch.hits = [];
   leftSearch.cur  = 0;
 
@@ -1697,41 +1703,66 @@ function onLeftSearch(){
 
   const normQ = maybeNorm(q, norm);
 
-  // For each case item row: test all text fields, show/hide, highlight
-  allFiles.forEach(file=>{
-    let fileHasMatch = false;
-    file.cases.forEach(c=>{
-      const row = document.getElementById('irow-'+c.id);
-      if(!row) return;
-
-      // Searchable text: caseNo + type + plaintiff + defendant
-      const fields = [c.caseNo||'', c.type||'', c.plaintiff||'', c.defendant||''].join(' ');
-      const testStr = maybeNorm(fields, norm);
-      const matches = testStr.toLowerCase().includes(normQ.toLowerCase());
+  if(folderOnly){
+    // ── FOLDER-ONLY MODE: search against category (file) label only ──
+    allFiles.forEach(file=>{
+      const catEl = document.getElementById('cat-'+file.id);
+      if(!catEl) return;
+      const labelEl = catEl.querySelector('.cat-file-name');
+      const labelText = maybeNorm(labelEl ? (labelEl.textContent||'') : file.label, norm);
+      const matches = labelText.toLowerCase().includes(normQ.toLowerCase());
 
       if(!matches){
-        row.classList.add('search-hidden');
+        // Hide the whole category header + its items
+        catEl.classList.add('search-hidden');
+        document.getElementById('items-'+file.id)?.classList.add('search-hidden');
         return;
       }
-      row.classList.remove('search-hidden');
-      row.classList.add('search-match');
-      fileHasMatch = true;
-
-      // Highlight inside .item-content
-      const content = row.querySelector('.item-content');
-      if(content){
-        const marks = highlightInElement(content, normQ, norm, 'sh');
+      catEl.classList.remove('search-hidden');
+      document.getElementById('items-'+file.id)?.classList.remove('search-hidden');
+      // Highlight inside cat-file-name
+      if(labelEl){
+        const marks = highlightInElement(labelEl, normQ, norm, 'sh');
         leftSearch.hits.push(...marks);
       }
     });
+  } else {
+    // ── NORMAL MODE: search against each case's fields ──
+    allFiles.forEach(file=>{
+      let fileHasMatch = false;
+      file.cases.forEach(c=>{
+        const row = document.getElementById('irow-'+c.id);
+        if(!row) return;
 
-    // Auto-expand category if it has matches
-    if(fileHasMatch && catCollapsed[file.id]){
-      catCollapsed[file.id]=false;
-      document.getElementById('cat-'+file.id)?.classList.remove('collapsed');
-      document.getElementById('items-'+file.id)?.classList.remove('hidden');
-    }
-  });
+        // Searchable text: caseNo + petitionNo + type + subject + party1 + party2
+        const fields = [c.caseNo||'', c.petitionNo||'', c.type||'', c.subject||'', c.party1||'', c.party2||''].join(' ');
+        const testStr = maybeNorm(fields, norm);
+        const matches = testStr.toLowerCase().includes(normQ.toLowerCase());
+
+        if(!matches){
+          row.classList.add('search-hidden');
+          return;
+        }
+        row.classList.remove('search-hidden');
+        row.classList.add('search-match');
+        fileHasMatch = true;
+
+        // Highlight inside .item-content
+        const content = row.querySelector('.item-content');
+        if(content){
+          const marks = highlightInElement(content, normQ, norm, 'sh');
+          leftSearch.hits.push(...marks);
+        }
+      });
+
+      // Auto-expand category if it has matches
+      if(fileHasMatch && catCollapsed[file.id]){
+        catCollapsed[file.id]=false;
+        document.getElementById('cat-'+file.id)?.classList.remove('collapsed');
+        document.getElementById('items-'+file.id)?.classList.remove('hidden');
+      }
+    });
+  }
 
   leftSearch.cur = 0;
   if(leftSearch.hits.length) setActiveMark(leftSearch.hits, 0);
