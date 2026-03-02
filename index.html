@@ -591,35 +591,58 @@
   .search-count.has-results { color: #7de08a; font-weight: 700; }
   .search-count.no-results  { color: #f08080; font-weight: 700; }
 
-  /* Compact checkbox label with tooltip */
-  .hdr-chk-label {
-    display: flex; align-items: center; gap: 0.2rem;
-    cursor: pointer; user-select: none; flex-shrink: 0;
-    font-size: 0.6rem;
+  /* ⋮ options button + dropdown */
+  .srch-opts-wrap {
+    position: relative; flex-shrink: 0;
   }
-  .hdr-chk-label span {
-    color: rgba(240,216,150,0.6); font-weight: 600;
-    background: rgba(255,255,255,0.07); border: 1px solid rgba(184,134,42,0.3);
-    border-radius: 2px; padding: 1px 4px; transition: all 0.15s;
-    white-space: nowrap;
+  .srch-opts-btn {
+    background: none; border: 1px solid rgba(184,134,42,0.35); border-radius: 3px;
+    color: var(--gold-pale); cursor: pointer; font-size: 1rem; line-height: 1;
+    padding: 1px 5px; transition: all 0.15s; user-select: none;
+    letter-spacing: 0; /* ⋮ glyph */
   }
-  .hdr-chk-label input[type="checkbox"] {
+  .srch-opts-btn:hover { background: rgba(184,134,42,0.18); border-color: var(--gold); }
+  .srch-opts-btn.active { background: rgba(184,134,42,0.22); border-color: var(--gold); color: var(--gold); }
+  /* dot indicator when any checkbox inside is checked */
+  .srch-opts-btn.has-active::after {
+    content: ''; display: inline-block;
+    width: 5px; height: 5px; border-radius: 50%;
+    background: #7de08a; vertical-align: super; margin-left: 1px;
+  }
+  .srch-opts-dropdown {
+    display: none; position: absolute; top: calc(100% + 5px); right: 0;
+    background: #1e1408; border: 1px solid var(--gold);
+    border-radius: 4px; padding: 0.4rem 0.5rem; z-index: 200;
+    min-width: 160px; box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+    flex-direction: column; gap: 0.35rem;
+  }
+  .srch-opts-wrap.open .srch-opts-dropdown { display: flex; }
+  .srch-opt-row {
+    display: flex; align-items: center; gap: 0.45rem;
+    cursor: pointer; user-select: none; white-space: nowrap;
+    padding: 0.18rem 0.2rem; border-radius: 3px;
+    transition: background 0.1s;
+  }
+  .srch-opt-row:hover { background: rgba(184,134,42,0.12); }
+  .srch-opt-row span {
+    font-size: 0.68rem; color: rgba(240,216,150,0.75);
+    font-family: 'Noto Sans Devanagari', sans-serif;
+  }
+  .srch-opt-row input[type="checkbox"]:checked + span { color: #a8d4ff; }
+  .srch-opt-row input[type="checkbox"] {
     appearance: none; -webkit-appearance: none;
-    width: 11px; height: 11px;
-    border: 1.5px solid rgba(184,134,42,0.4); border-radius: 2px;
+    width: 13px; height: 13px; flex-shrink: 0;
+    border: 1.5px solid rgba(184,134,42,0.5); border-radius: 2px;
     background: rgba(255,255,255,0.07); cursor: pointer; position: relative;
-    transition: all 0.12s; flex-shrink: 0;
+    transition: all 0.12s;
   }
-  .hdr-chk-label input[type="checkbox"]:checked {
+  .srch-opt-row input[type="checkbox"]:checked {
     background: var(--blue); border-color: #5b8cd6;
   }
-  .hdr-chk-label input[type="checkbox"]:checked::after {
+  .srch-opt-row input[type="checkbox"]:checked::after {
     content: '✓'; position: absolute; top: 50%; left: 50%;
     transform: translate(-50%, -52%);
-    color: #fff; font-size: 8px; font-weight: 800; line-height: 1;
-  }
-  .hdr-chk-label input[type="checkbox"]:checked + span {
-    color: #a8d4ff; border-color: #5b8cd6; background: rgba(26,58,107,0.35);
+    color: #fff; font-size: 9px; font-weight: 800; line-height: 1;
   }
 
   /* Highlight marks */
@@ -665,8 +688,13 @@
     <button class="search-nav-btn" id="leftNavPrev" onclick="leftSearchNav(-1)" disabled>‹</button>
     <button class="search-nav-btn" id="leftNavNext" onclick="leftSearchNav(1)"  disabled>›</button>
     <span class="search-count" id="leftSearchCount"></span>
-    <label class="hdr-chk-label" title="नेपाली सामान्यीकरण"><input type="checkbox" id="leftNormChk" onchange="onLeftSearch()"><span>स</span></label>
-    <label class="hdr-chk-label" title="फोल्डर नाममा मात्र खोज्नुहोस्"><input type="checkbox" id="leftFolderChk" onchange="onLeftSearch()"><span>फो</span></label>
+    <div class="srch-opts-wrap" id="leftOptsWrap">
+      <button class="srch-opts-btn" onclick="toggleSearchOpts('leftOptsWrap')" title="खोज विकल्पहरू">⋮</button>
+      <div class="srch-opts-dropdown" id="leftOptsDropdown">
+        <label class="srch-opt-row"><input type="checkbox" id="leftNormChk" onchange="onLeftSearch()"><span>स — सामान्यीकरण</span></label>
+        <label class="srch-opt-row"><input type="checkbox" id="leftFolderChk" onchange="onLeftSearch()"><span>फो — फोल्डरमा मात्र</span></label>
+      </div>
+    </div>
   </div>
   <div class="header-divider"></div>
   <!-- RIGHT SEARCH (in header) -->
@@ -680,9 +708,14 @@
     <button class="search-nav-btn" id="rightNavPrev" onclick="rightSearchNav(-1)" disabled>‹</button>
     <button class="search-nav-btn" id="rightNavNext" onclick="rightSearchNav(1)"  disabled>›</button>
     <span class="search-count" id="rightSearchCount"></span>
-    <label class="hdr-chk-label" title="नेपाली सामान्यीकरण"><input type="checkbox" id="rightNormChk" onchange="onRightSearch()"><span>स</span></label>
-    <label class="hdr-chk-label" title="मिलेको मात्र देखाउनुहोस्"><input type="checkbox" id="rightFilterChk" onchange="onRightSearch()"><span>फि</span></label>
-    <label class="hdr-chk-label" title="मुद्दाको किसिम (type) अनुसार फिल्टर गर्नुहोस्"><input type="checkbox" id="rightFilter2Chk" onchange="onRightSearch()"><span>फि२</span></label>
+    <div class="srch-opts-wrap" id="rightOptsWrap">
+      <button class="srch-opts-btn" onclick="toggleSearchOpts('rightOptsWrap')" title="खोज विकल्पहरू">⋮</button>
+      <div class="srch-opts-dropdown" id="rightOptsDropdown">
+        <label class="srch-opt-row"><input type="checkbox" id="rightNormChk" onchange="onRightSearch()"><span>स — सामान्यीकरण</span></label>
+        <label class="srch-opt-row"><input type="checkbox" id="rightFilterChk" onchange="onRightSearch()"><span>फि — मिलेको मात्र</span></label>
+        <label class="srch-opt-row"><input type="checkbox" id="rightFilter2Chk" onchange="onRightSearch()"><span>फि२ — किसिम अनुसार</span></label>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -1826,6 +1859,7 @@ function onLeftSearch(){
   document.getElementById('leftNavPrev').disabled = leftSearch.hits.length < 2;
   document.getElementById('leftNavNext').disabled = leftSearch.hits.length < 2;
   setTimeout(updateScrollArrows, 50);
+  _refreshOptsDots();
 }
 
 function leftSearchNav(dir){
@@ -1909,6 +1943,7 @@ function onRightSearch(){
   updateCountBadge(countEl, rightSearch.cur, rightSearch.hits.length);
   document.getElementById('rightNavPrev').disabled = rightSearch.hits.length < 2;
   document.getElementById('rightNavNext').disabled = rightSearch.hits.length < 2;
+  _refreshOptsDots();
 }
 
 function rightSearchNav(dir){
@@ -1921,6 +1956,42 @@ function rightSearchNav(dir){
 function clearRightSearch(){
   document.getElementById('rightSearchInput').value='';
   onRightSearch();
+}
+
+// ── Search options dropdown toggle ──
+function toggleSearchOpts(wrapId){
+  const wrap = document.getElementById(wrapId);
+  const isOpen = wrap.classList.toggle('open');
+  wrap.querySelector('.srch-opts-btn').classList.toggle('active', isOpen);
+  if(isOpen){
+    // close any other open dropdown
+    document.querySelectorAll('.srch-opts-wrap.open').forEach(w=>{
+      if(w.id!==wrapId){ w.classList.remove('open'); w.querySelector('.srch-opts-btn').classList.remove('active'); }
+    });
+  }
+  updateOptsDot(wrapId);
+}
+
+function updateOptsDot(wrapId){
+  const wrap = document.getElementById(wrapId);
+  if(!wrap) return;
+  const anyChecked = [...wrap.querySelectorAll('input[type="checkbox"]')].some(c=>c.checked);
+  wrap.querySelector('.srch-opts-btn').classList.toggle('has-active', anyChecked);
+}
+
+// Close dropdowns on outside click
+document.addEventListener('click', e=>{
+  document.querySelectorAll('.srch-opts-wrap.open').forEach(wrap=>{
+    if(!wrap.contains(e.target)){
+      wrap.classList.remove('open');
+      wrap.querySelector('.srch-opts-btn').classList.remove('active');
+    }
+  });
+});
+
+// Update dot indicators after each search (checkboxes may change via JS)
+function _refreshOptsDots(){
+  ['leftOptsWrap','rightOptsWrap'].forEach(updateOptsDot);
 }
 
 // keyboard: Enter = next, Shift+Enter = prev
@@ -1964,6 +2035,6 @@ window.addEventListener('DOMContentLoaded',()=>setTimeout(loadAllFiles,100));
 <script src="थाम्ने थमाउने म्याद वाँकी रहेकोले सुनुवाई गर्न मिलेन.txt"></script>
 <script src="दशीको सामान फिर्ता आदेश.txt"></script>
 <script src="जेसन आदेश.json"></script>
-<script src="अन्य.json"></script>   
+<script src="अन्य.json"></script> 
 </body>
 </html>
