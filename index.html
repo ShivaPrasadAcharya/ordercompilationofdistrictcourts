@@ -659,16 +659,12 @@
     border: 1px solid; transition: all 0.15s; line-height: 1;
     font-family: monospace;
   }
-  .srch-act-all {
-    background: rgba(26,92,42,0.18); border-color: rgba(45,138,66,0.45);
-    color: #7de08a;
+  .srch-act-reset {
+    background: rgba(184,134,42,0.12); border-color: rgba(184,134,42,0.4);
+    color: var(--gold-pale); width: 100%;
   }
-  .srch-act-all:hover { background: rgba(26,92,42,0.35); border-color: #2d8a42; color: #a0f0b0; }
-  .srch-act-cls {
-    background: rgba(139,26,26,0.18); border-color: rgba(139,26,26,0.45);
-    color: #f08080;
-  }
-  .srch-act-cls:hover { background: rgba(139,26,26,0.35); border-color: var(--red-seal); color: #ffaaaa; }
+  .srch-act-reset:hover { background: rgba(184,134,42,0.25); border-color: var(--gold); color: var(--gold-pale); }
+  .srch-act-reset.all-on { background: rgba(26,58,107,0.25); border-color: #5b8cd6; color: #a8d4ff; }
 
   /* Highlight marks */
   mark.sh {
@@ -720,8 +716,7 @@
         <label class="srch-opt-row"><input type="checkbox" id="leftFolderChk" onchange="onLeftSearch()"><span>फो — फोल्डरमा मात्र</span></label>
         <div class="srch-opt-divider"></div>
         <div class="srch-opt-btns">
-          <button class="srch-act-btn srch-act-all" onclick="optsSelectAll();toggleSearchOpts('leftOptsWrap')" title="सबै मुद्दा छान्नुहोस्">ALL</button>
-          <button class="srch-act-btn srch-act-cls" onclick="optsClearAll();toggleSearchOpts('leftOptsWrap')" title="सबै मुद्दा हटाउनुहोस्">CLS</button>
+          <button class="srch-act-btn srch-act-reset" id="leftResetBtn" onclick="optsResetChks('left')">Reset1</button>
         </div>
       </div>
     </div>
@@ -746,8 +741,7 @@
         <label class="srch-opt-row"><input type="checkbox" id="rightFilter2Chk" onchange="onRightSearch()"><span>फि२ — किसिम अनुसार</span></label>
         <div class="srch-opt-divider"></div>
         <div class="srch-opt-btns">
-          <button class="srch-act-btn srch-act-all" onclick="optsShowAll();toggleSearchOpts('rightOptsWrap')" title="सबै आदेश देखाउनुहोस्">ALL</button>
-          <button class="srch-act-btn srch-act-cls" onclick="optsClearRight();toggleSearchOpts('rightOptsWrap')" title="खोज र फिल्टर हटाउनुहोस्">CLS</button>
+          <button class="srch-act-btn srch-act-reset" id="rightResetBtn" onclick="optsResetChks('right')">Reset2</button>
         </div>
       </div>
     </div>
@@ -1993,24 +1987,34 @@ function clearRightSearch(){
   onRightSearch();
 }
 
-// ── Search options dropdown toggle ──
-function optsSelectAll(){
-  selectAll();
-}
-function optsClearAll(){
-  deselectAll();
-}
-function optsShowAll(){
-  // Uncheck all right filters, clear search, show all cards
-  ['rightFilterChk','rightFilter2Chk'].forEach(id=>{
-    const el=document.getElementById(id); if(el) el.checked=false;
-  });
-  clearRightSearch();
-  updateOptsDot('rightOptsWrap');
-}
-function optsClearRight(){
-  // Same as optsShowAll — clear input + filters
-  optsShowAll();
+// ── Search options checkbox reset (toggling) ──
+const _optsAllOn = { left: false, right: false };
+
+function optsResetChks(panel){
+  const wrapId  = panel==='left' ? 'leftOptsWrap' : 'rightOptsWrap';
+  const btnId   = panel==='left' ? 'leftResetBtn'  : 'rightResetBtn';
+  const wrap    = document.getElementById(wrapId);
+  const chks    = [...wrap.querySelectorAll('input[type="checkbox"]')];
+
+  // Toggle: if any checked → uncheck all; if all unchecked → check all
+  const anyOn   = chks.some(c => c.checked);
+  _optsAllOn[panel] = !anyOn;          // next press will do the opposite
+  chks.forEach(c => { c.checked = _optsAllOn[panel]; });
+
+  // Update button label/style to reflect state
+  const btn = document.getElementById(btnId);
+  if(btn){
+    btn.classList.toggle('all-on', _optsAllOn[panel]);
+    btn.textContent = panel==='left'
+      ? (_optsAllOn[panel] ? 'Reset1 ✓' : 'Reset1')
+      : (_optsAllOn[panel] ? 'Reset2 ✓' : 'Reset2');
+  }
+
+  // Re-trigger search so UI reflects new checkbox states
+  if(panel==='left')  onLeftSearch();
+  else                onRightSearch();
+
+  updateOptsDot(wrapId);
 }
 
 function toggleSearchOpts(wrapId){
